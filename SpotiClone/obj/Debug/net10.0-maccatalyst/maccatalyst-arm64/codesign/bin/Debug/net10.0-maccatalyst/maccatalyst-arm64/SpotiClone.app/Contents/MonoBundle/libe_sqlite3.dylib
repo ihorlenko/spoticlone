@@ -1,0 +1,1 @@
+-v --force --timestamp=none --sign - /Users/ihorlenko/dev/spoticlone/SpotiClone/bin/Debug/net10.0-maccatalyst/maccatalyst-arm64/SpotiClone.app/Contents/MonoBundle/libe_sqlite3.dylib

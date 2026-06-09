@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Shell xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+       xmlns:views="clr-namespace:SpotiClone.Views"
+       x:Class="SpotiClone.AppShell">
+
+    <TabBar>
+        <ShellContent Title="Головна"
+                      Icon="icon_home.png"
+                      ContentTemplate="{DataTemplate views:HomePage}"
+                      Route="home" />
+
+        <ShellContent Title="Пошук"
+                      Icon="icon_search.png"
+                      ContentTemplate="{DataTemplate views:SearchPage}"
+                      Route="search" />
+
+        <ShellContent Title="Бібліотека"
+                      Icon="icon_library.png"
+                      ContentTemplate="{DataTemplate views:LibraryPage}"
+                      Route="library" />
+
+        <ShellContent Title="Історія"
+                      Icon="icon_history.png"
+                      ContentTemplate="{DataTemplate views:HistoryPage}"
+                      Route="history" />
+    </TabBar>
+
+</Shell>

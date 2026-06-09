@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:SpotiClone.Views.Controls"
+             x:Class="SpotiClone.Views.HomePage"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Content area -->
+        <Grid Grid.Row="0">
+            <!-- Loading indicator -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="{StaticResource SpotifyGreen}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+
+            <!-- Main content -->
+            <ScrollView IsVisible="{Binding IsNotBusy}">
+                <VerticalStackLayout Spacing="16" Padding="16,16,0,16">
+
+                <Label Text="Ласкаво просимо"
+                       Style="{StaticResource TitleLabel}"
+                       Margin="0,0,16,0"/>
+
+                <!-- ── Нові треки ── -->
+                <Label Text="Нові треки"
+                       TextColor="{StaticResource TextPrimary}"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       Margin="0,0,16,0"/>
+
+                <CollectionView x:Name="TracksView"
+                                ItemsSource="{Binding RecentTracks}"
+                                HeightRequest="220">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="12"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.EmptyView>
+                        <Label Text="Немає треків"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource CardBorder}"
+                                    Padding="0"
+                                    WidthRequest="160">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={x:Reference TracksView}, Path=BindingContext.PlayTrackCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </Border.GestureRecognizers>
+                                <VerticalStackLayout>
+                                    <Image Source="{Binding Track.CoverUrl}"
+                                           Aspect="AspectFill"
+                                           HeightRequest="120"
+                                           WidthRequest="160"/>
+                                    <VerticalStackLayout Padding="10,8,10,4" Spacing="4">
+                                        <Label Text="{Binding Track.Title}"
+                                               TextColor="{StaticResource TextPrimary}"
+                                               FontSize="13"
+                                               FontAttributes="Bold"
+                                               LineBreakMode="TailTruncation"
+                                               MaxLines="1"/>
+                                        <Label Text="{Binding Track.ArtistName}"
+                                               Style="{StaticResource CaptionLabel}"
+                                               LineBreakMode="TailTruncation"
+                                               MaxLines="1"/>
+                                        <Label FontSize="22"
+                                               HorizontalOptions="End"
+                                               TextColor="{StaticResource TextSecondary}">
+                                            <Label.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={x:Reference TracksView}, Path=BindingContext.ToggleLikeCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                            </Label.GestureRecognizers>
+                                            <Label.Triggers>
+                                                <DataTrigger TargetType="Label"
+                                                             Binding="{Binding IsLiked}"
+                                                             Value="True">
+                                                    <Setter Property="Text" Value="♥"/>
+                                                    <Setter Property="TextColor" Value="{StaticResource SpotifyGreen}"/>
+                                                </DataTrigger>
+                                                <DataTrigger TargetType="Label"
+                                                             Binding="{Binding IsLiked}"
+                                                             Value="False">
+                                                    <Setter Property="Text" Value="♡"/>
+                                                </DataTrigger>
+                                            </Label.Triggers>
+                                        </Label>
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- ── Альбоми ── -->
+                <Label Text="Альбоми"
+                       TextColor="{StaticResource TextPrimary}"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       Margin="0,0,16,0"/>
+
+                <CollectionView x:Name="AlbumsView"
+                                ItemsSource="{Binding FeaturedAlbums}"
+                                HeightRequest="185">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="12"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.EmptyView>
+                        <Label Text="Немає альбомів"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <Border Style="{StaticResource CardBorder}"
+                                    Padding="0"
+                                    WidthRequest="145">
+                                <VerticalStackLayout>
+                                    <Image Source="{Binding CoverUrl}"
+                                           Aspect="AspectFill"
+                                           HeightRequest="120"
+                                           WidthRequest="145"/>
+                                    <VerticalStackLayout Padding="10,8,10,8" Spacing="4">
+                                        <Label Text="{Binding Title}"
+                                               TextColor="{StaticResource TextPrimary}"
+                                               FontSize="13"
+                                               FontAttributes="Bold"
+                                               LineBreakMode="TailTruncation"
+                                               MaxLines="1"/>
+                                        <Label Text="{Binding Year}"
+                                               Style="{StaticResource CaptionLabel}"/>
+                                    </VerticalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                <!-- ── Артисти ── -->
+                <Label Text="Артисти"
+                       TextColor="{StaticResource TextPrimary}"
+                       FontSize="18"
+                       FontAttributes="Bold"
+                       Margin="0,0,16,0"/>
+
+                <CollectionView x:Name="ArtistsView"
+                                ItemsSource="{Binding Artists}"
+                                HeightRequest="145">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout Orientation="Horizontal" ItemSpacing="16"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.EmptyView>
+                        <Label Text="Немає артистів"
+                               TextColor="{StaticResource TextSecondary}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+                    </CollectionView.EmptyView>
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <VerticalStackLayout WidthRequest="110" Spacing="8">
+                                <Border StrokeShape="Ellipse"
+                                        StrokeThickness="0"
+                                        BackgroundColor="{StaticResource BackgroundCard}"
+                                        WidthRequest="100"
+                                        HeightRequest="100"
+                                        HorizontalOptions="Center">
+                                    <Image Source="{Binding CoverUrl}"
+                                           Aspect="AspectFill"
+                                           WidthRequest="100"
+                                           HeightRequest="100"/>
+                                </Border>
+                                <Label Text="{Binding Name}"
+                                       TextColor="{StaticResource TextPrimary}"
+                                       FontSize="12"
+                                       HorizontalTextAlignment="Center"
+                                       LineBreakMode="TailTruncation"
+                                       MaxLines="1"
+                                       Margin="4,0"/>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+
+        <!-- MiniPlayer above TabBar -->
+        <controls:MiniPlayer Grid.Row="1"/>
+    </Grid>
+
+</ContentPage>

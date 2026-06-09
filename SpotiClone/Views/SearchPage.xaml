@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:SpotiClone.Views.Controls"
+             x:Class="SpotiClone.Views.SearchPage"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Content area -->
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- SearchBar -->
+            <SearchBar Grid.Row="0"
+                       x:Name="MainSearchBar"
+                       Text="{Binding SearchQuery}"
+                       SearchCommand="{Binding SearchCommand}"
+                       Placeholder="Пошук треків, артистів, альбомів…"
+                       PlaceholderColor="{StaticResource TextMuted}"
+                       TextColor="{StaticResource TextPrimary}"
+                       BackgroundColor="{StaticResource BackgroundCard}"
+                       CancelButtonColor="{StaticResource TextSecondary}"
+                       Margin="8,8,8,0"/>
+
+            <!-- Content below SearchBar -->
+            <Grid Grid.Row="1">
+
+                <!-- ActivityIndicator overlay -->
+                <ActivityIndicator IsRunning="{Binding IsBusy}"
+                                   IsVisible="{Binding IsBusy}"
+                                   Color="{StaticResource SpotifyGreen}"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+
+                <!-- Search History (visible when no query) -->
+                <ScrollView IsVisible="{Binding ShowHistory}">
+                    <VerticalStackLayout Spacing="0" Padding="16,12,16,16">
+
+                        <Grid Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0"
+                                   Text="Нещодавні пошуки"
+                                   FontSize="18"
+                                   FontAttributes="Bold"
+                                   TextColor="{StaticResource TextPrimary}"
+                                   VerticalOptions="Center"/>
+                            <Button Grid.Column="1"
+                                    Text="Очистити"
+                                    Command="{Binding ClearHistoryCommand}"
+                                    FontSize="13"
+                                    TextColor="{StaticResource TextSecondary}"
+                                    BackgroundColor="Transparent"
+                                    Padding="8,4"/>
+                        </Grid>
+
+                        <!-- History items via BindableLayout -->
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding SearchHistory}"
+                                             Spacing="0">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="0,10" ColumnSpacing="8">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.SelectHistoryItemCommand}"
+                                                CommandParameter="{Binding .}"/>
+                                        </Grid.GestureRecognizers>
+
+                                        <Label Grid.Column="0"
+                                               Text="🕐"
+                                               FontSize="16"
+                                               TextColor="{StaticResource TextMuted}"
+                                               VerticalOptions="Center"/>
+                                        <Label Grid.Column="1"
+                                               Text="{Binding Query}"
+                                               TextColor="{StaticResource TextPrimary}"
+                                               FontSize="15"
+                                               VerticalOptions="Center"
+                                               LineBreakMode="TailTruncation"/>
+                                        <Button Grid.Column="2"
+                                                Text="✕"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeleteHistoryItemCommand}"
+                                                CommandParameter="{Binding .}"
+                                                FontSize="14"
+                                                TextColor="{StaticResource TextMuted}"
+                                                BackgroundColor="Transparent"
+                                                Padding="8,4"
+                                                WidthRequest="36"
+                                                HeightRequest="36"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </ScrollView>
+
+                <!-- No results empty state -->
+                <VerticalStackLayout IsVisible="{Binding ShowNoResults}"
+                                     Spacing="8"
+                                     HorizontalOptions="Center"
+                                     VerticalOptions="Center">
+                    <Label Text="🔍"
+                           FontSize="48"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Нічого не знайдено"
+                           Style="{StaticResource SubtitleLabel}"
+                           HorizontalOptions="Center"/>
+                    <Label Text="Спробуйте інший запит"
+                           Style="{StaticResource CaptionLabel}"
+                           HorizontalOptions="Center"/>
+                </VerticalStackLayout>
+
+                <!-- Search Results (visible when HasResults) -->
+                <ScrollView IsVisible="{Binding HasResults}">
+                    <VerticalStackLayout Spacing="0" Padding="16,12,16,16">
+
+                        <!-- Tracks section -->
+                        <Label Text="Треки"
+                               IsVisible="{Binding HasTrackResults}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource TextPrimary}"
+                               Margin="0,0,0,8"/>
+
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding TrackResults}"
+                                             IsVisible="{Binding HasTrackResults}"
+                                             Spacing="0"
+                                             Margin="0,0,0,16">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="0,8" ColumnSpacing="12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="52"/>
+                                            <ColumnDefinition Width="*"/>
+                                            <ColumnDefinition Width="Auto"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PlayTrackCommand}"
+                                                CommandParameter="{Binding .}"/>
+                                        </Grid.GestureRecognizers>
+
+                                        <Border Grid.Column="0"
+                                                StrokeShape="RoundRectangle 6"
+                                                StrokeThickness="0"
+                                                BackgroundColor="{StaticResource BackgroundCard}"
+                                                WidthRequest="52"
+                                                HeightRequest="52">
+                                            <Image Source="{Binding CoverUrl}"
+                                                   Aspect="AspectFill"
+                                                   WidthRequest="52"
+                                                   HeightRequest="52"/>
+                                        </Border>
+
+                                        <VerticalStackLayout Grid.Column="1"
+                                                             Spacing="3"
+                                                             VerticalOptions="Center">
+                                            <Label Text="{Binding Title}"
+                                                   TextColor="{StaticResource TextPrimary}"
+                                                   FontSize="15"
+                                                   FontAttributes="Bold"
+                                                   LineBreakMode="TailTruncation"
+                                                   MaxLines="1"/>
+                                            <Label Text="{Binding ArtistName}"
+                                                   Style="{StaticResource CaptionLabel}"
+                                                   LineBreakMode="TailTruncation"
+                                                   MaxLines="1"/>
+                                        </VerticalStackLayout>
+
+                                        <Label Grid.Column="2"
+                                               Text="▶"
+                                               TextColor="{StaticResource TextMuted}"
+                                               FontSize="14"
+                                               VerticalOptions="Center"/>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                        <!-- Artists section -->
+                        <Label Text="Артисти"
+                               IsVisible="{Binding HasArtistResults}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource TextPrimary}"
+                               Margin="0,0,0,8"/>
+
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding ArtistResults}"
+                                             IsVisible="{Binding HasArtistResults}"
+                                             Spacing="0"
+                                             Margin="0,0,0,16">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="0,8" ColumnSpacing="12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="52"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Grid.Column="0"
+                                                StrokeShape="Ellipse"
+                                                StrokeThickness="0"
+                                                BackgroundColor="{StaticResource BackgroundCard}"
+                                                WidthRequest="52"
+                                                HeightRequest="52">
+                                            <Image Source="{Binding CoverUrl}"
+                                                   Aspect="AspectFill"
+                                                   WidthRequest="52"
+                                                   HeightRequest="52"/>
+                                        </Border>
+
+                                        <VerticalStackLayout Grid.Column="1"
+                                                             Spacing="3"
+                                                             VerticalOptions="Center">
+                                            <Label Text="{Binding Name}"
+                                                   TextColor="{StaticResource TextPrimary}"
+                                                   FontSize="15"
+                                                   FontAttributes="Bold"
+                                                   LineBreakMode="TailTruncation"
+                                                   MaxLines="1"/>
+                                            <Label Text="Артист"
+                                                   Style="{StaticResource CaptionLabel}"/>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                        <!-- Albums section -->
+                        <Label Text="Альбоми"
+                               IsVisible="{Binding HasAlbumResults}"
+                               FontSize="18"
+                               FontAttributes="Bold"
+                               TextColor="{StaticResource TextPrimary}"
+                               Margin="0,0,0,8"/>
+
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding AlbumResults}"
+                                             IsVisible="{Binding HasAlbumResults}"
+                                             Spacing="0">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Padding="0,8" ColumnSpacing="12">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="52"/>
+                                            <ColumnDefinition Width="*"/>
+                                        </Grid.ColumnDefinitions>
+
+                                        <Border Grid.Column="0"
+                                                StrokeShape="RoundRectangle 6"
+                                                StrokeThickness="0"
+                                                BackgroundColor="{StaticResource BackgroundCard}"
+                                                WidthRequest="52"
+                                                HeightRequest="52">
+                                            <Image Source="{Binding CoverUrl}"
+                                                   Aspect="AspectFill"
+                                                   WidthRequest="52"
+                                                   HeightRequest="52"/>
+                                        </Border>
+
+                                        <VerticalStackLayout Grid.Column="1"
+                                                             Spacing="3"
+                                                             VerticalOptions="Center">
+                                            <Label Text="{Binding Title}"
+                                                   TextColor="{StaticResource TextPrimary}"
+                                                   FontSize="15"
+                                                   FontAttributes="Bold"
+                                                   LineBreakMode="TailTruncation"
+                                                   MaxLines="1"/>
+                                            <Label Style="{StaticResource CaptionLabel}">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0} • {1}">
+                                                        <Binding Path="ArtistName"/>
+                                                        <Binding Path="Year"/>
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
+                                        </VerticalStackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+
+                    </VerticalStackLayout>
+                </ScrollView>
+
+            </Grid>
+        </Grid>
+
+        <!-- MiniPlayer above TabBar -->
+        <controls:MiniPlayer Grid.Row="1"/>
+    </Grid>
+
+</ContentPage>

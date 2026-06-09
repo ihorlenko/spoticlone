@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="SpotiClone.Views.Controls.MiniPlayer">
+
+    <Grid HeightRequest="60"
+          BackgroundColor="{StaticResource BackgroundCard}"
+          IsVisible="{Binding HasCurrentTrack}">
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="60"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="44"/>
+            <ColumnDefinition Width="44"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding OpenPlayerCommand}"/>
+        </Grid.GestureRecognizers>
+
+        <!-- Cover image -->
+        <Image Grid.Column="0"
+               Source="{Binding Player.CurrentTrack.CoverUrl}"
+               Aspect="AspectFill"
+               HeightRequest="60"
+               WidthRequest="60"/>
+
+        <!-- Track title + artist -->
+        <VerticalStackLayout Grid.Column="1"
+                             VerticalOptions="Center"
+                             Padding="8,0"
+                             Spacing="2">
+            <Label Text="{Binding Player.CurrentTrack.Title}"
+                   TextColor="{StaticResource TextPrimary}"
+                   FontSize="13"
+                   FontAttributes="Bold"
+                   LineBreakMode="TailTruncation"
+                   MaxLines="1"/>
+            <Label Text="{Binding Player.CurrentTrack.ArtistName}"
+                   TextColor="{StaticResource TextSecondary}"
+                   FontSize="11"
+                   LineBreakMode="TailTruncation"
+                   MaxLines="1"/>
+        </VerticalStackLayout>
+
+        <!-- Play/Pause button -->
+        <Button Grid.Column="2"
+                Command="{Binding Player.PlayPauseCommand}"
+                BackgroundColor="Transparent"
+                TextColor="{StaticResource TextPrimary}"
+                FontSize="22"
+                HeightRequest="44"
+                WidthRequest="44"
+                Padding="0">
+            <Button.Triggers>
+                <DataTrigger TargetType="Button"
+                             Binding="{Binding Player.IsPlaying}"
+                             Value="True">
+                    <Setter Property="Text" Value="⏸"/>
+                </DataTrigger>
+                <DataTrigger TargetType="Button"
+                             Binding="{Binding Player.IsPlaying}"
+                             Value="False">
+                    <Setter Property="Text" Value="▶"/>
+                </DataTrigger>
+            </Button.Triggers>
+        </Button>
+
+        <!-- Next track button -->
+        <Button Grid.Column="3"
+                Text="⏭"
+                Command="{Binding Player.NextCommand}"
+                BackgroundColor="Transparent"
+                TextColor="{StaticResource TextPrimary}"
+                FontSize="18"
+                HeightRequest="44"
+                WidthRequest="44"
+                Padding="0"/>
+    </Grid>
+
+</ContentView>

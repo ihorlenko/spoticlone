@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:SpotiClone.Views.Controls"
+             x:Class="SpotiClone.Views.HistoryPage"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- Content area -->
+        <Grid Grid.Row="0">
+
+            <!-- Loading indicator -->
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="{StaticResource SpotifyGreen}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+
+            <!-- Main content -->
+            <ScrollView IsVisible="{Binding IsNotBusy}">
+                <VerticalStackLayout Padding="16" Spacing="16">
+
+                    <!-- Header row: title + clear button -->
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                        <Label Grid.Column="0"
+                               Text="Історія прослуховувань"
+                               Style="{StaticResource TitleLabel}"
+                               VerticalOptions="Center"/>
+                        <Button Grid.Column="1"
+                                Text="Очистити"
+                                Command="{Binding ClearHistoryCommand}"
+                                BackgroundColor="{StaticResource DangerColor}"
+                                TextColor="{StaticResource TextPrimary}"
+                                CornerRadius="16"
+                                FontSize="13"
+                                HeightRequest="36"
+                                Padding="12,0"
+                                VerticalOptions="Center"/>
+                    </Grid>
+
+                    <!-- Empty state -->
+                    <VerticalStackLayout IsVisible="{Binding HasNoHistory}"
+                                         Spacing="8"
+                                         Margin="0,60,0,0"
+                                         HorizontalOptions="Center">
+                        <Label Text="🕐"
+                               FontSize="48"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Немає записів в історії"
+                               Style="{StaticResource SubtitleLabel}"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Зіграйте трек, щоб він з'явився тут"
+                               Style="{StaticResource CaptionLabel}"
+                               HorizontalOptions="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- History list -->
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding History}"
+                                         Spacing="4">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource CardBorder}"
+                                        Margin="0,0,0,4">
+                                    <Grid ColumnDefinitions="56,*,Auto"
+                                          ColumnSpacing="12"
+                                          Padding="4">
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PlayTrackCommand}"
+                                                CommandParameter="{Binding .}"/>
+                                        </Grid.GestureRecognizers>
+
+                                        <!-- Cover image -->
+                                        <Border Grid.Column="0"
+                                                StrokeShape="RoundRectangle 6"
+                                                StrokeThickness="0"
+                                                BackgroundColor="{StaticResource BackgroundElevated}"
+                                                WidthRequest="56"
+                                                HeightRequest="56">
+                                            <Image Source="{Binding CoverUrl}"
+                                                   Aspect="AspectFill"
+                                                   WidthRequest="56"
+                                                   HeightRequest="56"/>
+                                        </Border>
+
+                                        <!-- Track info -->
+                                        <VerticalStackLayout Grid.Column="1"
+                                                             Spacing="3"
+                                                             VerticalOptions="Center">
+                                            <Label Text="{Binding TrackTitle}"
+                                                   TextColor="{StaticResource TextPrimary}"
+                                                   FontSize="15"
+                                                   FontAttributes="Bold"
+                                                   LineBreakMode="TailTruncation"
+                                                   MaxLines="1"/>
+                                            <Label Text="{Binding ArtistName}"
+                                                   Style="{StaticResource CaptionLabel}"
+                                                   LineBreakMode="TailTruncation"
+                                                   MaxLines="1"/>
+                                        </VerticalStackLayout>
+
+                                        <!-- Listen date/time -->
+                                        <Label Grid.Column="2"
+                                               Text="{Binding ListenedAt, StringFormat='{0:dd.MM HH:mm}'}"
+                                               Style="{StaticResource CaptionLabel}"
+                                               VerticalOptions="Center"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </ScrollView>
+
+        </Grid>
+
+        <!-- MiniPlayer above TabBar -->
+        <controls:MiniPlayer Grid.Row="1"/>
+    </Grid>
+
+</ContentPage>
