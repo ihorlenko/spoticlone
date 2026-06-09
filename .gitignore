@@ -18,6 +18,12 @@ venv/
 dist/
 .env
 
+# Static assets
+backend/static/audio/*
+backend/static/covers/*
+!backend/static/audio/.gitkeep
+!backend/static/covers/.gitkeep
+
 # Large media files
 *.mp3
 *.mp4
