@@ -1,154 +1,189 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:SpotiClone.Models"
              x:Class="SpotiClone.Views.PlayerPage"
              BackgroundColor="{StaticResource BackgroundDark}"
              Shell.NavBarIsVisible="False">
 
-    <Grid Padding="24,0" RowSpacing="0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="80"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="120"/>
-        </Grid.RowDefinitions>
+    <ScrollView x:Name="MainScrollView" BackgroundColor="{StaticResource BackgroundDark}">
+        <VerticalStackLayout Padding="24,0" Spacing="0">
 
-        <!-- Row 0: Header -->
-        <Grid Grid.Row="0" VerticalOptions="Center">
-            <Button Text="↓"
-                    HorizontalOptions="Start"
-                    Command="{Binding CloseCommand}"
-                    BackgroundColor="Transparent"
-                    TextColor="{StaticResource TextPrimary}"
-                    FontSize="24"
-                    WidthRequest="44"
-                    HeightRequest="44"/>
-            <Label Text="Зараз грає"
-                   HorizontalOptions="Center"
-                   VerticalOptions="Center"
-                   TextColor="{StaticResource TextSecondary}"
-                   FontSize="13"
-                   FontAttributes="Bold"/>
-        </Grid>
-
-        <!-- Row 1: Cover image -->
-        <Border Grid.Row="1"
-                HorizontalOptions="Center"
-                VerticalOptions="Center"
-                HeightRequest="{OnPlatform iOS=280, MacCatalyst=320}"
-                WidthRequest="{OnPlatform iOS=280, MacCatalyst=320}"
-                StrokeShape="RoundRectangle 16"
-                Stroke="Transparent"
-                BackgroundColor="{StaticResource BackgroundCard}">
-            <Image Source="{Binding CurrentTrack.CoverUrl}"
-                   Aspect="AspectFill"/>
-        </Border>
-
-        <!-- Row 2: Track info + like -->
-        <Grid Grid.Row="2" Margin="0,20,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="48"/>
-            </Grid.ColumnDefinitions>
-
-            <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
-                <Label Text="{Binding CurrentTrack.Title}"
-                       FontSize="{OnPlatform iOS=22, MacCatalyst=26}"
-                       FontAttributes="Bold"
-                       TextColor="{StaticResource TextPrimary}"
-                       LineBreakMode="TailTruncation"/>
-                <Label Text="{Binding CurrentTrack.ArtistName}"
+            <!-- Header -->
+            <Grid HeightRequest="80" VerticalOptions="Fill">
+                <Button Text="&#xe5cd;"
+                        FontFamily="MaterialIcons"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center"
+                        Command="{Binding CloseCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource TextPrimary}"
+                        FontSize="24"
+                        WidthRequest="44"
+                        HeightRequest="44"/>
+                <Label Text="Зараз грає"
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"
                        TextColor="{StaticResource TextSecondary}"
-                       FontSize="14"
-                       LineBreakMode="TailTruncation"/>
+                       FontSize="13"
+                       FontAttributes="Bold"/>
+            </Grid>
+
+            <!-- Cover image -->
+            <Border HorizontalOptions="Center"
+                    HeightRequest="{OnPlatform iOS=280, MacCatalyst=320}"
+                    WidthRequest="{OnPlatform iOS=280, MacCatalyst=320}"
+                    MaximumHeightRequest="380"
+                    Margin="0,24,0,24"
+                    StrokeShape="RoundRectangle 16"
+                    Stroke="Transparent"
+                    BackgroundColor="{StaticResource BackgroundCard}">
+                <Image Source="{Binding CurrentTrack.CoverUrl}"
+                       Aspect="AspectFill"/>
+            </Border>
+
+            <!-- Track info + like -->
+            <Grid HeightRequest="60">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="48"/>
+                </Grid.ColumnDefinitions>
+
+                <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
+                    <Label Text="{Binding CurrentTrack.Title}"
+                           FontSize="{OnPlatform iOS=22, MacCatalyst=26}"
+                           FontAttributes="Bold"
+                           TextColor="{StaticResource TextPrimary}"
+                           LineBreakMode="TailTruncation"/>
+                    <Label Text="{Binding CurrentTrack.ArtistName}"
+                           TextColor="{StaticResource TextSecondary}"
+                           FontSize="14"
+                           LineBreakMode="TailTruncation"/>
+                </VerticalStackLayout>
+
+                <Button Grid.Column="1"
+                        FontFamily="MaterialIcons"
+                        Command="{Binding ToggleLikeCommand}"
+                        BackgroundColor="Transparent"
+                        FontSize="24"
+                        VerticalOptions="Center"
+                        HorizontalOptions="Center">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsLiked}" Value="True">
+                            <Setter Property="Text" Value="&#xe87d;"/>
+                            <Setter Property="TextColor" Value="{StaticResource SpotifyGreen}"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsLiked}" Value="False">
+                            <Setter Property="Text" Value="&#xe87e;"/>
+                            <Setter Property="TextColor" Value="{StaticResource TextSecondary}"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+            </Grid>
+
+            <!-- Progress slider + times -->
+            <VerticalStackLayout Margin="0,20,0,0" Spacing="4">
+                <Slider x:Name="ProgressSlider"
+                        Minimum="0"
+                        Maximum="{Binding DurationMs}"
+                        MinimumTrackColor="{StaticResource SpotifyGreen}"
+                        MaximumTrackColor="{StaticResource TextMuted}"
+                        ThumbColor="{StaticResource TextPrimary}"
+                        DragStarted="OnSliderDragStarted"
+                        DragCompleted="OnSliderDragCompleted"/>
+                <Grid>
+                    <Label Text="{Binding CurrentPositionFormatted}"
+                           HorizontalOptions="Start"
+                           TextColor="{StaticResource TextMuted}"
+                           FontSize="12"/>
+                    <Label Text="{Binding DurationFormatted}"
+                           HorizontalOptions="End"
+                           TextColor="{StaticResource TextMuted}"
+                           FontSize="12"/>
+                </Grid>
             </VerticalStackLayout>
 
-            <Button Grid.Column="1"
-                    Command="{Binding ToggleLikeCommand}"
-                    BackgroundColor="Transparent"
-                    FontSize="24"
-                    VerticalOptions="Center"
-                    HorizontalOptions="Center">
-                <Button.Triggers>
-                    <DataTrigger TargetType="Button" Binding="{Binding IsLiked}" Value="True">
-                        <Setter Property="Text" Value="♥"/>
-                        <Setter Property="TextColor" Value="{StaticResource SpotifyGreen}"/>
-                    </DataTrigger>
-                    <DataTrigger TargetType="Button" Binding="{Binding IsLiked}" Value="False">
-                        <Setter Property="Text" Value="♡"/>
-                        <Setter Property="TextColor" Value="{StaticResource TextSecondary}"/>
-                    </DataTrigger>
-                </Button.Triggers>
-            </Button>
-        </Grid>
+            <!-- Playback controls -->
+            <Grid HeightRequest="120" Margin="0,0,0,40">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
-        <!-- Row 3: Progress slider + times -->
-        <VerticalStackLayout Grid.Row="3" Margin="0,20,0,0" Spacing="4">
-            <Slider x:Name="ProgressSlider"
-                    Minimum="0"
-                    Maximum="{Binding DurationMs}"
-                    Value="{Binding CurrentPositionMs, Mode=OneWay}"
-                    MinimumTrackColor="{StaticResource SpotifyGreen}"
-                    MaximumTrackColor="{StaticResource TextMuted}"
-                    ThumbColor="{StaticResource TextPrimary}"
-                    DragStarted="OnSliderDragStarted"
-                    DragCompleted="OnSliderDragCompleted"/>
-            <Grid>
-                <Label Text="{Binding CurrentPositionFormatted}"
-                       HorizontalOptions="Start"
-                       TextColor="{StaticResource TextMuted}"
-                       FontSize="12"/>
-                <Label Text="{Binding DurationFormatted}"
-                       HorizontalOptions="End"
-                       TextColor="{StaticResource TextMuted}"
-                       FontSize="12"/>
+                <Button Grid.Column="0"
+                        Text="&#xe045;"
+                        FontFamily="MaterialIcons"
+                        Command="{Binding PreviousCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource TextPrimary}"
+                        FontSize="28"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"/>
+
+                <Button Grid.Column="1"
+                        FontFamily="MaterialIcons"
+                        Command="{Binding PlayPauseCommand}"
+                        BackgroundColor="{StaticResource TextPrimary}"
+                        TextColor="{StaticResource BackgroundDark}"
+                        FontSize="28"
+                        HeightRequest="64"
+                        WidthRequest="64"
+                        CornerRadius="32"
+                        Margin="20,0"
+                        VerticalOptions="Center">
+                    <Button.Triggers>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsPlaying}" Value="True">
+                            <Setter Property="Text" Value="&#xe034;"/>
+                        </DataTrigger>
+                        <DataTrigger TargetType="Button" Binding="{Binding IsPlaying}" Value="False">
+                            <Setter Property="Text" Value="&#xe037;"/>
+                        </DataTrigger>
+                    </Button.Triggers>
+                </Button>
+
+                <Button Grid.Column="2"
+                        Text="&#xe044;"
+                        FontFamily="MaterialIcons"
+                        Command="{Binding NextCommand}"
+                        BackgroundColor="Transparent"
+                        TextColor="{StaticResource TextPrimary}"
+                        FontSize="28"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center"/>
             </Grid>
+
+            <!-- Lyrics section -->
+            <VerticalStackLayout IsVisible="{Binding HasLyrics}" Margin="0,8,0,48">
+                <Label Text="Текст пісні"
+                       TextColor="{StaticResource TextSecondary}"
+                       FontSize="12"
+                       FontAttributes="Bold"
+                       CharacterSpacing="1.5"
+                       Margin="0,0,0,16"/>
+                <VerticalStackLayout x:Name="LyricsContainer"
+                                     BindableLayout.ItemsSource="{Binding LyricsLines}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:LyricLine">
+                            <Label Text="{Binding Text}"
+                                   Padding="0,8"
+                                   LineBreakMode="WordWrap"
+                                   TextColor="{StaticResource TextMuted}"
+                                   FontSize="15">
+                                <Label.Triggers>
+                                    <DataTrigger TargetType="Label" Binding="{Binding IsActive}" Value="True">
+                                        <Setter Property="TextColor" Value="{StaticResource TextPrimary}"/>
+                                        <Setter Property="FontSize" Value="18"/>
+                                        <Setter Property="FontAttributes" Value="Bold"/>
+                                    </DataTrigger>
+                                </Label.Triggers>
+                            </Label>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+            </VerticalStackLayout>
+
         </VerticalStackLayout>
-
-        <!-- Row 4: Playback controls -->
-        <Grid Grid.Row="4" VerticalOptions="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="Auto"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <Button Grid.Column="0"
-                    Text="⏮"
-                    Command="{Binding PreviousCommand}"
-                    BackgroundColor="Transparent"
-                    TextColor="{StaticResource TextPrimary}"
-                    FontSize="28"
-                    HorizontalOptions="End"/>
-
-            <Button Grid.Column="1"
-                    Command="{Binding PlayPauseCommand}"
-                    BackgroundColor="{StaticResource TextPrimary}"
-                    TextColor="{StaticResource BackgroundDark}"
-                    FontSize="28"
-                    HeightRequest="64"
-                    WidthRequest="64"
-                    CornerRadius="32"
-                    Margin="20,0">
-                <Button.Triggers>
-                    <DataTrigger TargetType="Button" Binding="{Binding IsPlaying}" Value="True">
-                        <Setter Property="Text" Value="⏸"/>
-                    </DataTrigger>
-                    <DataTrigger TargetType="Button" Binding="{Binding IsPlaying}" Value="False">
-                        <Setter Property="Text" Value="▶"/>
-                    </DataTrigger>
-                </Button.Triggers>
-            </Button>
-
-            <Button Grid.Column="2"
-                    Text="⏭"
-                    Command="{Binding NextCommand}"
-                    BackgroundColor="Transparent"
-                    TextColor="{StaticResource TextPrimary}"
-                    FontSize="28"
-                    HorizontalOptions="Start"/>
-        </Grid>
-    </Grid>
+    </ScrollView>
 
 </ContentPage>

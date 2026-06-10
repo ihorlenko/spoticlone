@@ -11,4 +11,5 @@ public interface IApiService
     Task<List<AlbumDto>> GetAlbumsAsync(int limit = 20, int skip = 0);
     Task<AlbumDto?> GetAlbumAsync(string id);
     Task<SearchResultDto> SearchAsync(string query, int limit = 10);
+    Task<string?> GetLyricsAsync(string trackId);
 }

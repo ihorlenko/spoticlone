@@ -21,6 +21,25 @@ public partial class PlayerPage : ContentPage
         InitializeComponent();
         _viewModel = viewModel;
         BindingContext = viewModel;
+        _viewModel.PropertyChanged += OnViewModelPropertyChanged;
+    }
+
+    private void OnViewModelPropertyChanged(object? sender, System.ComponentModel.PropertyChangedEventArgs e)
+    {
+        if (e.PropertyName == nameof(PlayerViewModel.CurrentPositionMs) && !_viewModel.IsSeeking)
+            ProgressSlider.Value = _viewModel.CurrentPositionMs;
+
+        if (e.PropertyName == nameof(PlayerViewModel.CurrentLyricIndex))
+            ScrollToCurrentLyric(_viewModel.CurrentLyricIndex);
+    }
+
+    private void ScrollToCurrentLyric(int index)
+    {
+        if (index < 0 || index >= LyricsContainer.Children.Count) return;
+        _ = MainScrollView.ScrollToAsync(
+            (VisualElement)LyricsContainer.Children[index],
+            ScrollToPosition.Center,
+            animated: true);
     }
 
     private void OnSliderDragStarted(object? sender, EventArgs e)

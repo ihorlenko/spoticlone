@@ -19,7 +19,8 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- SearchBar -->
+            <!-- HorizontalOptions="Fill" forces the SearchBar to take the full parent width,
+                 bypassing the native UISearchBar intrinsic size (~40px) on Mac Catalyst. -->
             <SearchBar Grid.Row="0"
                        x:Name="MainSearchBar"
                        Text="{Binding SearchQuery}"
@@ -29,6 +30,7 @@
                        TextColor="{StaticResource TextPrimary}"
                        BackgroundColor="{StaticResource BackgroundCard}"
                        CancelButtonColor="{StaticResource TextSecondary}"
+                       HorizontalOptions="Fill"
                        Margin="8,8,8,0"/>
 
             <!-- Content below SearchBar -->
@@ -43,7 +45,9 @@
 
                 <!-- Search History (visible when no query) -->
                 <ScrollView IsVisible="{Binding ShowHistory}">
-                    <VerticalStackLayout Spacing="0" Padding="16,12,16,16">
+                    <VerticalStackLayout Spacing="0" Padding="16,12,16,16"
+                                         MaximumWidthRequest="840"
+                                         HorizontalOptions="Center">
 
                         <Grid Margin="0,0,0,8">
                             <Grid.ColumnDefinitions>
@@ -129,7 +133,9 @@
 
                 <!-- Search Results (visible when HasResults) -->
                 <ScrollView IsVisible="{Binding HasResults}">
-                    <VerticalStackLayout Spacing="0" Padding="16,12,16,16">
+                    <VerticalStackLayout Spacing="0" Padding="16,12,16,16"
+                                         MaximumWidthRequest="840"
+                                         HorizontalOptions="Center">
 
                         <!-- Tracks section -->
                         <Label Text="Треки"
@@ -184,11 +190,16 @@
                                                    MaxLines="1"/>
                                         </VerticalStackLayout>
 
-                                        <Label Grid.Column="2"
-                                               Text="▶"
-                                               TextColor="{StaticResource TextMuted}"
-                                               FontSize="14"
-                                               VerticalOptions="Center"/>
+                                        <Button Grid.Column="2"
+                                                Text="&#xe03b;"
+                                                FontFamily="MaterialIcons"
+                                                FontSize="20"
+                                                BackgroundColor="Transparent"
+                                                TextColor="{StaticResource TextSecondary}"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddToPlaylistCommand}"
+                                                CommandParameter="{Binding .}"
+                                                WidthRequest="40" HeightRequest="40"
+                                                Padding="0" VerticalOptions="Center"/>
                                     </Grid>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>

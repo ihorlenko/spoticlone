@@ -18,11 +18,15 @@
 		</data>
 		<key>Info.plist</key>
 		<data>
-		BzUyU2Yi2jVTKGHX/3nV5uMuDhM=
+		BDXOIlk11/vBDUn7kLme9eSRG9E=
+		</data>
+		<key>MaterialIcons-Regular.ttf</key>
+		<data>
+		fgLD8AVTL/TSQUhWfIQIl1anhIo=
 		</data>
 		<key>MauiInfo.plist</key>
 		<data>
-		iEtuUGCV6JM3gxS/pO33swhmpp8=
+		1rz5hdu/Y8o3gy77gkz3DfBugM0=
 		</data>
 		<key>MauiSplash.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
 		<data>
@@ -178,11 +182,11 @@
 		</data>
 		<key>SpotiClone.dll</key>
 		<data>
-		fHm+OBnNX+6njYQaERayfd5mUKo=
+		yRyw02GEM5TJ+zBzSjClL/NmXYk=
 		</data>
 		<key>SpotiClone.pdb</key>
 		<data>
-		pZEGf2nPicoRUmFWkg4lPDt0/uA=
+		MLY2ovDh/DYTLQ9V2pg7OOH+pE0=
 		</data>
 		<key>System.AppContext.dll</key>
 		<data>
@@ -1100,11 +1104,18 @@
 			8ni2zfKv8v+yfwHYPIirGvVA1FtBEpJ082fuvGAawAs=
 			</data>
 		</dict>
+		<key>MaterialIcons-Regular.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			7xSfCL3S/wmk4shXNHa3sPP7sVtiOVSt5ZiZ5xdb7do=
+			</data>
+		</dict>
 		<key>MauiInfo.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			tx0KXqEC+DvcCGyogQTEQWHcCWJYYqH24NtPwhpQEjo=
+			zj00f2/ckmHKefsq+flmnlCZk2ll7jDX0ZwQAnd6jP8=
 			</data>
 		</dict>
 		<key>MauiSplash.storyboardc/01J-lp-oVM-view-Ze5-6b-2t3.nib</key>
@@ -1370,14 +1381,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			igJY7SoUmzlufR89j75TCg0BScy63ofJsjxo94wyzy0=
+			iR3ZHZzT1nOw2qI6S8TbpGG56Kp2kevmvr/jy1p1ldo=
 			</data>
 		</dict>
 		<key>SpotiClone.pdb</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			jgTbP9WsqA8oA5aEwINW5/vpO4+B6wDQOBR6EueLMJI=
+			4356dBRwL7jBNZg5KIAyX3QWQTK/t0q5eFdySwPkTr4=
 			</data>
 		</dict>
 		<key>System.AppContext.dll</key>

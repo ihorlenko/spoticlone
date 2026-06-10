@@ -10,9 +10,13 @@ public partial class HomePage : ContentPage
         BindingContext = viewModel;
     }
 
-    protected override void OnAppearing()
+    protected override async void OnAppearing()
     {
         base.OnAppearing();
-        (BindingContext as HomeViewModel)?.LoadCommand.Execute(null);
+        if (BindingContext is not HomeViewModel vm) return;
+        if (vm.RecentTracks.Count == 0)
+            vm.LoadCommand.Execute(null);
+        else
+            await vm.RefreshLikedStatusAsync();
     }
 }

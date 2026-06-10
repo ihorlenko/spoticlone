@@ -323,3 +323,4 @@
 /Users/ihorlenko/dev/spoticlone/SpotiClone/obj/Debug/net10.0-ios/iossimulator-arm64/SpotiClone.pdb
 /Users/ihorlenko/dev/spoticlone/SpotiClone/obj/Debug/net10.0-ios/iossimulator-arm64/SpotiClone.genruntimeconfig.cache
 /Users/ihorlenko/dev/spoticlone/SpotiClone/obj/Debug/net10.0-ios/iossimulator-arm64/ref/SpotiClone.dll
+/Users/ihorlenko/dev/spoticlone/SpotiClone/obj/Debug/net10.0-ios/iossimulator-arm64/resizetizer/f/MaterialIcons-Regular.ttf

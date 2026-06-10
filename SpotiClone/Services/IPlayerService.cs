@@ -6,6 +6,8 @@ public interface IPlayerService
     double Duration { get; }
     bool IsPlaying { get; }
 
+    event EventHandler? PlaybackEnded;
+
     Task PlayAsync(string audioUrl);
     void Pause();
     void Resume();

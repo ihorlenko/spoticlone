@@ -188,6 +188,9 @@ public class DatabaseService : IDatabaseService
     public async Task AddListeningHistoryAsync(ListeningHistoryEntity entry)
     {
         await InitAsync();
+        await _db.Table<ListeningHistoryEntity>()
+            .Where(h => h.TrackId == entry.TrackId)
+            .DeleteAsync();
         await _db.InsertAsync(entry);
     }
 

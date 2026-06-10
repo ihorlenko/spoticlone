@@ -23,7 +23,9 @@
 
             <!-- Main content -->
             <ScrollView IsVisible="{Binding IsNotBusy}">
-                <VerticalStackLayout Spacing="16" Padding="16,16,0,16">
+                <VerticalStackLayout Spacing="16" Padding="16,16,0,16"
+                                     MaximumWidthRequest="1200"
+                                     HorizontalOptions="Center">
 
                 <Label Text="Ласкаво просимо"
                        Style="{StaticResource TitleLabel}"
@@ -74,28 +76,36 @@
                                                Style="{StaticResource CaptionLabel}"
                                                LineBreakMode="TailTruncation"
                                                MaxLines="1"/>
-                                        <Label FontSize="22"
-                                               HorizontalOptions="End"
-                                               TextColor="{StaticResource TextSecondary}">
-                                            <Label.GestureRecognizers>
-                                                <TapGestureRecognizer
+                                        <Grid ColumnDefinitions="*,Auto,Auto">
+                                            <Button Grid.Column="1"
+                                                    Text="&#xe03b;"
+                                                    FontFamily="MaterialIcons"
+                                                    FontSize="18"
+                                                    BackgroundColor="Transparent"
+                                                    TextColor="{StaticResource TextSecondary}"
+                                                    Command="{Binding Source={x:Reference TracksView}, Path=BindingContext.AddToPlaylistCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    WidthRequest="32" HeightRequest="32"
+                                                    Padding="0"/>
+                                            <Button Grid.Column="2"
+                                                    Text="♡"
+                                                    FontSize="20"
+                                                    BackgroundColor="Transparent"
+                                                    TextColor="{StaticResource TextSecondary}"
                                                     Command="{Binding Source={x:Reference TracksView}, Path=BindingContext.ToggleLikeCommand}"
-                                                    CommandParameter="{Binding .}"/>
-                                            </Label.GestureRecognizers>
-                                            <Label.Triggers>
-                                                <DataTrigger TargetType="Label"
-                                                             Binding="{Binding IsLiked}"
-                                                             Value="True">
-                                                    <Setter Property="Text" Value="♥"/>
-                                                    <Setter Property="TextColor" Value="{StaticResource SpotifyGreen}"/>
-                                                </DataTrigger>
-                                                <DataTrigger TargetType="Label"
-                                                             Binding="{Binding IsLiked}"
-                                                             Value="False">
-                                                    <Setter Property="Text" Value="♡"/>
-                                                </DataTrigger>
-                                            </Label.Triggers>
-                                        </Label>
+                                                    CommandParameter="{Binding .}"
+                                                    WidthRequest="36" HeightRequest="36"
+                                                    Padding="0">
+                                                <Button.Triggers>
+                                                    <DataTrigger TargetType="Button"
+                                                                 Binding="{Binding IsLiked}"
+                                                                 Value="True">
+                                                        <Setter Property="Text" Value="♥"/>
+                                                        <Setter Property="TextColor" Value="{StaticResource SpotifyGreen}"/>
+                                                    </DataTrigger>
+                                                </Button.Triggers>
+                                            </Button>
+                                        </Grid>
                                     </VerticalStackLayout>
                                 </VerticalStackLayout>
                             </Border>
@@ -127,6 +137,11 @@
                             <Border Style="{StaticResource CardBorder}"
                                     Padding="0"
                                     WidthRequest="145">
+                                <Border.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={x:Reference AlbumsView}, Path=BindingContext.OpenAlbumCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </Border.GestureRecognizers>
                                 <VerticalStackLayout>
                                     <Image Source="{Binding CoverUrl}"
                                            Aspect="AspectFill"
@@ -170,6 +185,11 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <VerticalStackLayout WidthRequest="110" Spacing="8">
+                                <VerticalStackLayout.GestureRecognizers>
+                                    <TapGestureRecognizer
+                                        Command="{Binding Source={x:Reference ArtistsView}, Path=BindingContext.OpenArtistCommand}"
+                                        CommandParameter="{Binding .}"/>
+                                </VerticalStackLayout.GestureRecognizers>
                                 <Border StrokeShape="Ellipse"
                                         StrokeThickness="0"
                                         BackgroundColor="{StaticResource BackgroundCard}"

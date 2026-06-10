@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SpotiClone.Data;
+using SpotiClone.Helpers;
 using SpotiClone.Models;
 using SpotiClone.Services;
 
@@ -125,6 +126,30 @@ public partial class LibraryViewModel : BaseViewModel
         {
             ["TrackId"] = track.TrackId
         });
+    }
+
+    [RelayCommand]
+    private async Task OpenPlaylistAsync(PlaylistEntity playlist)
+    {
+        if (playlist is null) return;
+        await Shell.Current.GoToAsync("playlist-detail",
+            new Dictionary<string, object>
+            {
+                ["PlaylistId"] = playlist.Id.ToString(),
+                ["PlaylistName"] = playlist.Name
+            });
+    }
+
+    [RelayCommand]
+    private async Task AddToPlaylistAsync(LikedTrackEntity track)
+    {
+        if (track is null) return;
+        var dto = new TrackDto
+        {
+            Id = track.TrackId, Title = track.Title, ArtistName = track.ArtistName,
+            CoverUrl = track.CoverUrl, AudioUrl = track.AudioUrl, DurationMs = track.DurationMs
+        };
+        await PlaylistHelper.AddTrackToPlaylistAsync(dto, _dbService);
     }
 
     [RelayCommand]

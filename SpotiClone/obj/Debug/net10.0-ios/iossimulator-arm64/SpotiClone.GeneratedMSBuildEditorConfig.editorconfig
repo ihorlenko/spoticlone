@@ -6,7 +6,7 @@ build_property.IncludeAllContentForSelfExtract =
 build_property.VerifyReferenceTrimCompatibility = 
 build_property.VerifyReferenceAotCompatibility = 
 build_property.MauiXamlNoWarn = 
-build_property.EnableMauiXamlDiagnostics = true
+build_property.EnableMauiXamlDiagnostics = True
 build_property.MauiXamlLineInfo = 
 build_property.Configuration = Debug
 build_property.MvvmToolkitEnableINotifyPropertyChangingSupport = true
@@ -122,6 +122,16 @@ build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SpotiClone.Views.PlayerPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views/PlayerPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views/PlayerPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
+[/Users/ihorlenko/dev/spoticlone/SpotiClone/Views/PlaylistDetailPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SpotiClone.Views.PlaylistDetailPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/PlaylistDetailPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/PlaylistDetailPage.xaml
 build_metadata.AdditionalFiles.Inflator = SourceGen
 build_metadata.AdditionalFiles.NoWarn = 
 build_metadata.AdditionalFiles.EnableDiagnostics = 

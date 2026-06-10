@@ -127,6 +127,16 @@ build_metadata.AdditionalFiles.NoWarn =
 build_metadata.AdditionalFiles.EnableDiagnostics = 
 build_metadata.AdditionalFiles.LineInfo = 
 
+[/Users/ihorlenko/dev/spoticlone/SpotiClone/Views/PlaylistDetailPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = SpotiClone.Views.PlaylistDetailPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views/PlaylistDetailPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views/PlaylistDetailPage.xaml
+build_metadata.AdditionalFiles.Inflator = SourceGen
+build_metadata.AdditionalFiles.NoWarn = 
+build_metadata.AdditionalFiles.EnableDiagnostics = 
+build_metadata.AdditionalFiles.LineInfo = 
+
 [/Users/ihorlenko/dev/spoticlone/SpotiClone/Views/SearchPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = SpotiClone.Views.SearchPage.xaml

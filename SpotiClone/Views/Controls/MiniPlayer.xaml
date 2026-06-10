@@ -7,6 +7,11 @@
           BackgroundColor="{StaticResource BackgroundCard}"
           IsVisible="{Binding HasCurrentTrack}">
 
+        <Grid.RowDefinitions>
+            <RowDefinition Height="57"/>
+            <RowDefinition Height="3"/>
+        </Grid.RowDefinitions>
+
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="60"/>
             <ColumnDefinition Width="*"/>
@@ -19,14 +24,14 @@
         </Grid.GestureRecognizers>
 
         <!-- Cover image -->
-        <Image Grid.Column="0"
+        <Image Grid.Row="0" Grid.Column="0"
                Source="{Binding Player.CurrentTrack.CoverUrl}"
                Aspect="AspectFill"
-               HeightRequest="60"
+               HeightRequest="57"
                WidthRequest="60"/>
 
         <!-- Track title + artist -->
-        <VerticalStackLayout Grid.Column="1"
+        <VerticalStackLayout Grid.Row="0" Grid.Column="1"
                              VerticalOptions="Center"
                              Padding="8,0"
                              Spacing="2">
@@ -44,7 +49,8 @@
         </VerticalStackLayout>
 
         <!-- Play/Pause button -->
-        <Button Grid.Column="2"
+        <Button Grid.Row="0" Grid.Column="2"
+                FontFamily="MaterialIcons"
                 Command="{Binding Player.PlayPauseCommand}"
                 BackgroundColor="Transparent"
                 TextColor="{StaticResource TextPrimary}"
@@ -56,19 +62,20 @@
                 <DataTrigger TargetType="Button"
                              Binding="{Binding Player.IsPlaying}"
                              Value="True">
-                    <Setter Property="Text" Value="⏸"/>
+                    <Setter Property="Text" Value="&#xe034;"/>
                 </DataTrigger>
                 <DataTrigger TargetType="Button"
                              Binding="{Binding Player.IsPlaying}"
                              Value="False">
-                    <Setter Property="Text" Value="▶"/>
+                    <Setter Property="Text" Value="&#xe037;"/>
                 </DataTrigger>
             </Button.Triggers>
         </Button>
 
         <!-- Next track button -->
-        <Button Grid.Column="3"
-                Text="⏭"
+        <Button Grid.Row="0" Grid.Column="3"
+                Text="&#xe044;"
+                FontFamily="MaterialIcons"
                 Command="{Binding Player.NextCommand}"
                 BackgroundColor="Transparent"
                 TextColor="{StaticResource TextPrimary}"
@@ -76,6 +83,23 @@
                 HeightRequest="44"
                 WidthRequest="44"
                 Padding="0"/>
+
+        <!-- Progress bar -->
+        <Grid x:Name="SeekBarContainer"
+              Grid.Row="1" Grid.ColumnSpan="4">
+            <BoxView BackgroundColor="{StaticResource TextMuted}" VerticalOptions="Fill"/>
+            <BoxView x:Name="SeekBarFill"
+                     BackgroundColor="{StaticResource SpotifyGreen}"
+                     HorizontalOptions="Start"
+                     VerticalOptions="Fill"
+                     WidthRequest="0"/>
+            <BoxView BackgroundColor="Transparent" VerticalOptions="Fill">
+                <BoxView.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSeekBarTapped"/>
+                    <PanGestureRecognizer PanUpdated="OnSeekBarPanned"/>
+                </BoxView.GestureRecognizers>
+            </BoxView>
+        </Grid>
     </Grid>
 
 </ContentView>

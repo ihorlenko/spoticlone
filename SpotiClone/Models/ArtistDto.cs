@@ -4,7 +4,7 @@ namespace SpotiClone.Models;
 
 public class ArtistDto
 {
-    [JsonPropertyName("id")]
+    [JsonPropertyName("_id")]
     public string Id { get; set; } = string.Empty;
 
     [JsonPropertyName("name")]

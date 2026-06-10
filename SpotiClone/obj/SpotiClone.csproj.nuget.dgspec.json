@@ -715,7 +715,7 @@
         }
       },
       "runtimes": {
-        "maccatalyst-arm64": {
+        "iossimulator-arm64": {
           "#import": []
         }
       }

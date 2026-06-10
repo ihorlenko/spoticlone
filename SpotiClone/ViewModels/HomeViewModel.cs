@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SpotiClone.Data;
+using SpotiClone.Helpers;
 using SpotiClone.Models;
 using SpotiClone.Services;
 
@@ -36,6 +37,16 @@ public partial class HomeViewModel : BaseViewModel
         _dbService = dbService;
         _playerViewModel = playerViewModel;
         Title = "Головна";
+    }
+
+    public async Task RefreshLikedStatusAsync()
+    {
+        if (RecentTracks.Count == 0) return;
+        var likedIds = (await _dbService.GetLikedTracksAsync())
+            .Select(l => l.TrackId)
+            .ToHashSet();
+        foreach (var item in RecentTracks)
+            item.IsLiked = likedIds.Contains(item.Track.Id);
     }
 
     [RelayCommand]
@@ -131,6 +142,57 @@ public partial class HomeViewModel : BaseViewModel
         {
             ["TrackId"] = item.Track.Id
         });
+    }
+
+    [RelayCommand]
+    private async Task AddToPlaylistAsync(TrackLikeItem item)
+    {
+        if (item?.Track is null) return;
+        await PlaylistHelper.AddTrackToPlaylistAsync(item.Track, _dbService);
+    }
+
+    [RelayCommand]
+    private async Task OpenAlbumAsync(AlbumDto album)
+    {
+        if (album is null) return;
+        IsBusy = true;
+        try
+        {
+            var full = await _apiService.GetAlbumAsync(album.Id);
+            if (full?.Tracks is null || full.Tracks.Count == 0)
+            {
+                await Shell.Current.DisplayAlertAsync(album.Title, "У цьому альбомі немає треків.", "OK");
+                return;
+            }
+            var queue = full.Tracks;
+            await _playerViewModel.PlayTrackAsync(queue[0], queue);
+            await Shell.Current.GoToAsync("player",
+                new Dictionary<string, object> { ["TrackId"] = queue[0].Id });
+        }
+        catch (Exception) { }
+        finally { IsBusy = false; }
+    }
+
+    [RelayCommand]
+    private async Task OpenArtistAsync(ArtistDto artist)
+    {
+        if (artist is null) return;
+        IsBusy = true;
+        try
+        {
+            var full = await _apiService.GetArtistAsync(artist.Id);
+            if (full?.Tracks is null || full.Tracks.Count == 0)
+            {
+                await Shell.Current.DisplayAlertAsync(artist.Name, "У цього артиста немає треків.", "OK");
+                return;
+            }
+            var queue = full.Tracks;
+            await _playerViewModel.PlayTrackAsync(queue[0], queue);
+            await Shell.Current.GoToAsync("player",
+                new Dictionary<string, object> { ["TrackId"] = queue[0].Id });
+        }
+        catch (Exception) { }
+        finally { IsBusy = false; }
     }
 
     [RelayCommand]

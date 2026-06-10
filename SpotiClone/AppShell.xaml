@@ -5,25 +5,49 @@
        x:Class="SpotiClone.AppShell">
 
     <TabBar>
-        <ShellContent Title="Головна"
-                      Icon="icon_home.png"
-                      ContentTemplate="{DataTemplate views:HomePage}"
-                      Route="home" />
+        <ShellContent Route="home"
+                      Title="{OnPlatform iOS='Головна', MacCatalyst=''}"
+                      ContentTemplate="{DataTemplate views:HomePage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIcons"
+                                 Glyph="&#xe88a;"
+                                 Color="{StaticResource TextSecondary}"
+                                 Size="24"/>
+            </ShellContent.Icon>
+        </ShellContent>
 
-        <ShellContent Title="Пошук"
-                      Icon="icon_search.png"
-                      ContentTemplate="{DataTemplate views:SearchPage}"
-                      Route="search" />
+        <ShellContent Route="search"
+                      Title="{OnPlatform iOS='Пошук', MacCatalyst=''}"
+                      ContentTemplate="{DataTemplate views:SearchPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIcons"
+                                 Glyph="&#xe8b6;"
+                                 Color="{StaticResource TextSecondary}"
+                                 Size="24"/>
+            </ShellContent.Icon>
+        </ShellContent>
 
-        <ShellContent Title="Бібліотека"
-                      Icon="icon_library.png"
-                      ContentTemplate="{DataTemplate views:LibraryPage}"
-                      Route="library" />
+        <ShellContent Route="library"
+                      Title="{OnPlatform iOS='Бібліотека', MacCatalyst=''}"
+                      ContentTemplate="{DataTemplate views:LibraryPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIcons"
+                                 Glyph="&#xe030;"
+                                 Color="{StaticResource TextSecondary}"
+                                 Size="24"/>
+            </ShellContent.Icon>
+        </ShellContent>
 
-        <ShellContent Title="Історія"
-                      Icon="icon_history.png"
-                      ContentTemplate="{DataTemplate views:HistoryPage}"
-                      Route="history" />
+        <ShellContent Route="history"
+                      Title="{OnPlatform iOS='Історія', MacCatalyst=''}"
+                      ContentTemplate="{DataTemplate views:HistoryPage}">
+            <ShellContent.Icon>
+                <FontImageSource FontFamily="MaterialIcons"
+                                 Glyph="&#xe889;"
+                                 Color="{StaticResource TextSecondary}"
+                                 Size="24"/>
+            </ShellContent.Icon>
+        </ShellContent>
     </TabBar>
 
 </Shell>

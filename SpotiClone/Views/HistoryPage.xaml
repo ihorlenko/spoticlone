@@ -24,7 +24,9 @@
 
             <!-- Main content -->
             <ScrollView IsVisible="{Binding IsNotBusy}">
-                <VerticalStackLayout Padding="16" Spacing="16">
+                <VerticalStackLayout Padding="16" Spacing="16"
+                                     MaximumWidthRequest="840"
+                                     HorizontalOptions="Center">
 
                     <!-- Header row: title + clear button -->
                     <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
@@ -33,14 +35,15 @@
                                Style="{StaticResource TitleLabel}"
                                VerticalOptions="Center"/>
                         <Button Grid.Column="1"
-                                Text="Очистити"
+                                Text="&#xe16c;"
+                                FontFamily="MaterialIcons"
+                                FontSize="24"
                                 Command="{Binding ClearHistoryCommand}"
-                                BackgroundColor="{StaticResource DangerColor}"
-                                TextColor="{StaticResource TextPrimary}"
-                                CornerRadius="16"
-                                FontSize="13"
-                                HeightRequest="36"
-                                Padding="12,0"
+                                BackgroundColor="Transparent"
+                                TextColor="{StaticResource TextMuted}"
+                                WidthRequest="40"
+                                HeightRequest="40"
+                                Padding="0"
                                 VerticalOptions="Center"/>
                     </Grid>
 
@@ -49,8 +52,10 @@
                                          Spacing="8"
                                          Margin="0,60,0,0"
                                          HorizontalOptions="Center">
-                        <Label Text="🕐"
+                        <Label Text="&#xe889;"
+                               FontFamily="MaterialIcons"
                                FontSize="48"
+                               TextColor="{StaticResource TextMuted}"
                                HorizontalOptions="Center"/>
                         <Label Text="Немає записів в історії"
                                Style="{StaticResource SubtitleLabel}"

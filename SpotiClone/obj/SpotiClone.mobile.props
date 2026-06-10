@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Project>
   <PropertyGroup>
-    <_MacCatalystRuntimeIdentifier>maccatalyst-arm64</_MacCatalystRuntimeIdentifier>
+    <_iOSRuntimeIdentifier>iossimulator-arm64</_iOSRuntimeIdentifier>
   </PropertyGroup>
 </Project>

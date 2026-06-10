@@ -8,12 +8,27 @@
 ## Загальний прогрес
 
 **Поточна фаза:** 15 — Фінальна перевірка та polish (в процесі)
-**Остання активна сесія:** 2026-06-08
-**Загальна готовність:** 97% (15/16 фаз — фаза 15 виконана на ~75%)
+**Остання активна сесія:** 2026-06-10
+**Загальна готовність:** 99% (15/16 фаз — фаза 15 виконана на ~95%)
 
 ---
 
 ## Що зроблено (останні зміни)
+
+### Фаза 15 — В процесі (2026-06-10) — Lyrics
+- ✅ **Lyrics з динамічним хайлайтінгом:** `backend/routers/tracks.py` — новий `GET /tracks/{id}/lyrics` (PlainText, читає `static/lyrics/{id}.lrc`, валідація ObjectId для захисту від path traversal); `backend/static/lyrics/` — директорія для .lrc файлів; `Models/LyricLine.cs` — ObservableObject з `TimeMs`, `Text`, `IsActive`; `Helpers/LrcParser.cs` — парсер формату `[mm:ss.xx]` та `[mm:ss.xxx]`; `IApiService/ApiService` — `GetLyricsAsync(trackId)` → `string?`; `PlayerViewModel` — `LyricsLines` (ObservableCollection), `HasLyrics`, `CurrentLyricIndex`, `LoadLyricsAsync` (викликається після зміни треку), `UpdateCurrentLyric` (у кожному тику таймера — знаходить потрібний рядок бінарним пошуком знизу); `PlayerPage.xaml` — секція "Текст пісні" з `BindableLayout` + `DataTrigger` (активний рядок: TextPrimary/18/Bold, неактивний: TextMuted/15); `PlayerPage.xaml.cs` — `ScrollToCurrentLyric` через `MainScrollView.ScrollToAsync(VisualElement, Center, animated)`
+- ✅ `dotnet build -f net10.0-maccatalyst` — **0 errors, 0 warnings**
+
+### Фаза 15 — В процесі (2026-06-10)
+- ✅ **MiniPlayer прогрес-бар:** `MiniPlayer.xaml` — Grid перетворено на 2-рядковий (Row 0: 57px контент, Row 1: 3px прогрес-бар); BoxView-based seek bar (background + SpotifyGreen fill + transparent gesture overlay); `TapGestureRecognizer` (тап-seek через `TappedEventArgs.GetPosition`) + `PanGestureRecognizer` (drag-seek з `_panStartRatio + TotalX/Width`)
+- ✅ **MiniPlayer.xaml.cs** — підписка на `Player.PropertyChanged` → `UpdateFill()` (guard `!IsSeeking`); `SeekBarContainer.SizeChanged` → initial fill; `OnSeekBarTapped`/`OnSeekBarPanned` → `BeginSeek()`/`CompleteSeek()` (той самий pattern що PlayerPage.xaml.cs)
+- ✅ `dotnet build -f net10.0-maccatalyst` — **0 errors, 0 warnings**
+
+### Фаза 15 — В процесі (2026-06-09)
+- ✅ **БАГ 1 (прогрес-бар):** `PlayerService.PlayAsync` — замінено `MemoryStream` на temp file (`Path.GetTempFileName() + ".mp3"` → `File.WriteAllBytesAsync` → `File.OpenRead`); додано `PlaybackEnded` event в `IPlayerService` та `PlayerService`; `PlayerViewModel` підписується на `PlaybackEnded` → auto-next; `OnTimerTick` — fallback auto-advance коли `!IsPlaying && pos >= dur - 1s`
+- ✅ **БАГ 2 (Material Icons):** Завантажено `MaterialIcons-Regular.ttf`; зареєстровано в `MauiProgram.cs`; створено `Helpers/Icons.cs` з 14 константами; доданий стиль `IconButton` в `Styles.xaml`; замінено всі emoji/unicode у `PlayerPage.xaml`, `MiniPlayer.xaml`, `LibraryPage.xaml`, `HistoryPage.xaml` на `&#xNNNN;` з `FontFamily="MaterialIcons"`
+- ✅ **БАГ 3 (PlayerPage layout macOS):** Замінено зовнішній `Grid` на `ScrollView` → `VerticalStackLayout`; обкладинка має `HeightRequest/WidthRequest` через `OnPlatform` + `MaximumHeightRequest="380"`; рядок з ♥ отримав `HeightRequest="60"`; controls row має `Margin="0,0,0,40"`
+- ✅ `dotnet build -f net10.0-maccatalyst` — **0 errors, 0 warnings** після всіх трьох виправлень
 
 ### Фаза 15 — В процесі (2026-06-08)
 - ✅ `IDatabaseService` — додано `GetCachedAlbumsAsync()` та `GetCachedArtistsAsync()`
@@ -187,6 +202,7 @@
 
 **Фаза 15 залишилось:**
 - Запустити застосунок на iOS Simulator або macOS (Mac Catalyst) і перевірити реальне відтворення
+- Перевірити вручну: TabBar лише іконки без тексту на macOS, клік на альбом/артиста → відтворення, клік на плейліст → PlaylistDetailPage, + → action sheet, кнопка delete → видалення треку
 - Зробити скріншоти для курсової роботи: HomePage, SearchPage, PlayerPage, LibraryPage, HistoryPage
 - Команда запуску: `dotnet build -t:Run -f net10.0-maccatalyst` (або відкрити у Xcode)
 
@@ -196,6 +212,9 @@
 
 - **Python PATH:** Системний `python3` = 3.9.6. Для запуску бекенду використовуй `/opt/homebrew/bin/python3.11` або `python3.11`. Краще створити venv: `python3.11 -m venv backend/.venv`
 - **SpotiClone/ директорія:** Не створена навмисно — `dotnet new maui -n SpotiClone` (Фаза 4) створить її сам. Якщо створити порожню директорію наперед — dotnet new може видати помилку.
+- ~~Прогрес-бар не рухається~~ — виправлено (temp file замість MemoryStream + PlaybackEnded event)
+- ~~Символи ? замість іконок на iOS~~ — виправлено (MaterialIcons шрифт + &#xNNNN; escape)
+- ~~PlayerPage layout ламається на macOS~~ — виправлено (ScrollView + VerticalStackLayout)
 
 ---
 
@@ -291,3 +310,8 @@ spoticlone/
 | 2026-06-08 | Фаза 13: LibraryViewModel (tab switcher, LoadAsync, CreatePlaylistCommand, DeletePlaylistCommand, PlayLikedTrackCommand, UnlikeTrackCommand), LibraryPage.xaml (DataTriggers tab styles, BindableLayout, empty states), LibraryPage.xaml.cs (DI), MauiProgram DI, DisplayAlertAsync fix, build OK | — |
 | 2026-06-08 | Фаза 14: HistoryViewModel (LoadAsync, ClearHistoryAsync з підтвердженням, PlayTrackAsync з cache/API fallback), HistoryPage.xaml (header+кнопка Очистити, empty state, BindableLayout з TapGesture, ListenedAt формат), HistoryPage.xaml.cs (DI), MauiProgram DI реєстрація, build OK | — |
 | 2026-06-08 | Фаза 15 (polish): GetCachedAlbums/Artists методи, HomeViewModel fallback повний, PlayerViewModel try/catch PlayAsync+DisplayAlert, SearchViewModel ShowNoResults, SearchPage empty state "нічого не знайдено", 34→0 CS8618 warnings (= string.Empty в entity класах), build 0 errors 0 warnings | — |
+| 2026-06-09 | Фаза 15 (bugs): БАГ 1 — temp file замість MemoryStream + PlaybackEnded event + auto-next; БАГ 2 — MaterialIcons шрифт + Icons.cs + IconButton стиль + заміна всіх emoji в PlayerPage/MiniPlayer/LibraryPage/HistoryPage; БАГ 3 — PlayerPage ScrollView+VerticalStackLayout з MaximumHeightRequest. Build 0 errors 0 warnings | — |
+| 2026-06-09 | Фаза 15 (UX): ПОКРАЩЕННЯ 1 — AppShell FontImageSource (MaterialIcons) + OnPlatform Title ('' на macOS); ПОКРАЩЕННЯ 2 — HomeViewModel OpenAlbumCommand/OpenArtistCommand + TapGestureRecognizer на альбом/артист; ПОКРАЩЕННЯ 3 — PlaylistDetailPage (ViewModel+XAML+code-behind), LibraryViewModel OpenPlaylistCommand, LibraryPage TapGestureRecognizer на плейліст, маршрут playlist-detail, DI реєстрація. Build 0 errors 0 warnings | DisplayAlert/DisplayActionSheet → DisplayAlertAsync/DisplayActionSheetAsync (застарілі в .NET MAUI 10) |
+| 2026-06-09 | Фаза 15 (UX2): ЗМІНА 1 — PlaylistHelper.cs (статичний хелпер AddTrackToPlaylistAsync); AddToPlaylistCommand у HomeViewModel/SearchViewModel/LibraryViewModel; кнопка &#xe03b; у track-картках HomeP/SearchP/LibraryP; PlaylistDetailViewModel — видалено AddTrackCommand та IApiService. ЗМІНА 2 — MaximumWidthRequest=840 (центрування) на LibraryP/HistoryP/SearchP; MaximumWidthRequest=1200 на HomePage (горизонтальні ColV). Build 0 errors 0 warnings | — |
+| 2026-06-10 | Фаза 15 (MiniPlayer seek bar): MiniPlayer.xaml — 2-рядковий Grid (57px+3px), BoxView seek bar (SpotifyGreen fill + transparent gesture overlay); MiniPlayer.xaml.cs — PropertyChanged→UpdateFill, TapGestureRecognizer (GetPosition seek), PanGestureRecognizer (drag seek), BeginSeek/CompleteSeek без дублювання логіки. Build 0 errors 0 warnings | GestureStatus.Cancelled → GestureStatus.Canceled (MAUI enum) |
+| 2026-06-10 | Фаза 15 (Lyrics): backend GET /tracks/{id}/lyrics + static/lyrics/ директорія; LyricLine.cs (ObservableObject IsActive); LrcParser.cs ([mm:ss.xx/xxx]); IApiService/ApiService GetLyricsAsync; PlayerViewModel LoadLyricsAsync+UpdateCurrentLyric+CurrentLyricIndex; PlayerPage.xaml BindableLayout секція+DataTrigger; PlayerPage.xaml.cs MainScrollView.ScrollToAsync авто-скрол. Build 0 errors 0 warnings | — |

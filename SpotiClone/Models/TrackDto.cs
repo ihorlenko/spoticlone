@@ -6,7 +6,7 @@ namespace SpotiClone.Models;
 
 public class TrackDto : INotifyPropertyChanged
 {
-    [JsonPropertyName("id")]
+    [JsonPropertyName("_id")]
     public string Id { get; set; } = string.Empty;
 
     [JsonPropertyName("title")]

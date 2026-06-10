@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:controls="clr-namespace:SpotiClone.Views.Controls"
+             x:Class="SpotiClone.Views.PlaylistDetailPage"
+             Title="{Binding Title}"
+             BackgroundColor="{StaticResource PageBackground}">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <ActivityIndicator IsRunning="{Binding IsBusy}"
+                               IsVisible="{Binding IsBusy}"
+                               Color="{StaticResource SpotifyGreen}"
+                               HorizontalOptions="Center"
+                               VerticalOptions="Center"/>
+
+            <ScrollView IsVisible="{Binding IsNotBusy}">
+                <VerticalStackLayout Padding="16" Spacing="16"
+                                     MaximumWidthRequest="840"
+                                     HorizontalOptions="Center">
+
+                    <Label Text="{Binding Playlist.Name}"
+                           Style="{StaticResource TitleLabel}"/>
+
+                    <!-- Empty state -->
+                    <VerticalStackLayout IsVisible="{Binding HasNoTracks}"
+                                         Spacing="8" Margin="0,40,0,0"
+                                         HorizontalOptions="Center">
+                        <Label Text="&#xe405;"
+                               FontFamily="MaterialIcons"
+                               FontSize="48"
+                               TextColor="{StaticResource TextMuted}"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Плейліст порожній"
+                               Style="{StaticResource SubtitleLabel}"
+                               HorizontalOptions="Center"/>
+                        <Label Text="Додайте треки зі сторінок Головна, Пошук або Бібліотека"
+                               Style="{StaticResource CaptionLabel}"
+                               HorizontalOptions="Center"
+                               HorizontalTextAlignment="Center"/>
+                    </VerticalStackLayout>
+
+                    <!-- Tracks list -->
+                    <VerticalStackLayout BindableLayout.ItemsSource="{Binding Tracks}"
+                                         Spacing="4">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Border Style="{StaticResource CardBorder}"
+                                        Margin="0,0,0,4">
+                                    <Grid ColumnDefinitions="56,*,44"
+                                          ColumnSpacing="12" Padding="4">
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PlayTrackCommand}"
+                                                CommandParameter="{Binding .}"/>
+                                        </Grid.GestureRecognizers>
+
+                                        <Border Grid.Column="0"
+                                                StrokeShape="RoundRectangle 6"
+                                                StrokeThickness="0"
+                                                BackgroundColor="{StaticResource BackgroundElevated}"
+                                                WidthRequest="56" HeightRequest="56">
+                                            <Image Source="{Binding CoverUrl}"
+                                                   Aspect="AspectFill"
+                                                   WidthRequest="56" HeightRequest="56"/>
+                                        </Border>
+
+                                        <VerticalStackLayout Grid.Column="1"
+                                                             Spacing="3"
+                                                             VerticalOptions="Center">
+                                            <Label Text="{Binding Title}"
+                                                   TextColor="{StaticResource TextPrimary}"
+                                                   FontSize="15" FontAttributes="Bold"
+                                                   LineBreakMode="TailTruncation" MaxLines="1"/>
+                                            <Label Text="{Binding ArtistName}"
+                                                   Style="{StaticResource CaptionLabel}"
+                                                   LineBreakMode="TailTruncation" MaxLines="1"/>
+                                        </VerticalStackLayout>
+
+                                        <Button Grid.Column="2"
+                                                Text="&#xe872;"
+                                                FontFamily="MaterialIcons"
+                                                FontSize="18"
+                                                TextColor="{StaticResource DangerColor}"
+                                                BackgroundColor="Transparent"
+                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.RemoveTrackCommand}"
+                                                CommandParameter="{Binding .}"
+                                                WidthRequest="44" HeightRequest="44"
+                                                Padding="0" VerticalOptions="Center"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+
+                </VerticalStackLayout>
+            </ScrollView>
+        </Grid>
+
+        <controls:MiniPlayer Grid.Row="1"/>
+    </Grid>
+
+</ContentPage>

@@ -24,7 +24,9 @@
 
             <!-- Main content -->
             <ScrollView IsVisible="{Binding IsNotBusy}">
-                <VerticalStackLayout Padding="16" Spacing="16">
+                <VerticalStackLayout Padding="16" Spacing="16"
+                                     MaximumWidthRequest="840"
+                                     HorizontalOptions="Center">
 
                     <Label Text="Моя бібліотека"
                            Style="{StaticResource TitleLabel}"/>
@@ -90,7 +92,8 @@
                                              Spacing="8"
                                              Margin="0,40,0,0"
                                              HorizontalOptions="Center">
-                            <Label Text="♡"
+                            <Label Text="&#xe87e;"
+                                   FontFamily="MaterialIcons"
                                    FontSize="48"
                                    TextColor="{StaticResource TextMuted}"
                                    HorizontalOptions="Center"/>
@@ -109,7 +112,7 @@
                                 <DataTemplate>
                                     <Border Style="{StaticResource CardBorder}"
                                             Margin="0,0,0,4">
-                                        <Grid ColumnDefinitions="56,*,44"
+                                        <Grid ColumnDefinitions="56,*,44,44"
                                               ColumnSpacing="12"
                                               Padding="4">
                                             <Grid.GestureRecognizers>
@@ -146,7 +149,21 @@
                                             </VerticalStackLayout>
 
                                             <Button Grid.Column="2"
-                                                    Text="♥"
+                                                    Text="&#xe03b;"
+                                                    FontFamily="MaterialIcons"
+                                                    TextColor="{StaticResource TextSecondary}"
+                                                    BackgroundColor="Transparent"
+                                                    FontSize="20"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddToPlaylistCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    WidthRequest="44"
+                                                    HeightRequest="44"
+                                                    Padding="0"
+                                                    VerticalOptions="Center"/>
+
+                                            <Button Grid.Column="3"
+                                                    Text="&#xe87d;"
+                                                    FontFamily="MaterialIcons"
                                                     TextColor="{StaticResource SpotifyGreen}"
                                                     BackgroundColor="Transparent"
                                                     FontSize="20"
@@ -178,8 +195,10 @@
                                              Spacing="8"
                                              Margin="0,32,0,0"
                                              HorizontalOptions="Center">
-                            <Label Text="🎵"
+                            <Label Text="&#xe405;"
+                                   FontFamily="MaterialIcons"
                                    FontSize="48"
+                                   TextColor="{StaticResource TextMuted}"
                                    HorizontalOptions="Center"/>
                             <Label Text="Немає плейлистів"
                                    Style="{StaticResource SubtitleLabel}"
@@ -199,10 +218,17 @@
                                         <Grid ColumnDefinitions="44,*,44"
                                               ColumnSpacing="12"
                                               Padding="4">
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenPlaylistCommand}"
+                                                    CommandParameter="{Binding .}"/>
+                                            </Grid.GestureRecognizers>
 
                                             <Label Grid.Column="0"
-                                                   Text="🎵"
+                                                   Text="&#xe405;"
+                                                   FontFamily="MaterialIcons"
                                                    FontSize="28"
+                                                   TextColor="{StaticResource TextMuted}"
                                                    HorizontalOptions="Center"
                                                    VerticalOptions="Center"/>
 
@@ -220,10 +246,11 @@
                                             </VerticalStackLayout>
 
                                             <Button Grid.Column="2"
-                                                    Text="✕"
+                                                    Text="&#xe872;"
+                                                    FontFamily="MaterialIcons"
                                                     TextColor="{StaticResource DangerColor}"
                                                     BackgroundColor="Transparent"
-                                                    FontSize="16"
+                                                    FontSize="20"
                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeletePlaylistCommand}"
                                                     CommandParameter="{Binding .}"
                                                     WidthRequest="44"

@@ -18,6 +18,7 @@ public static class MauiProgram
 			{
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+				fonts.AddFont("MaterialIcons-Regular.ttf", "MaterialIcons");
 			});
 
 		// Services
@@ -33,6 +34,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<SearchViewModel>();
 		builder.Services.AddTransient<LibraryViewModel>();
 		builder.Services.AddTransient<HistoryViewModel>();
+		builder.Services.AddTransient<PlaylistDetailViewModel>();
 
 		// Views
 		builder.Services.AddTransient<HomePage>();
@@ -40,6 +42,7 @@ public static class MauiProgram
 		builder.Services.AddTransient<LibraryPage>();
 		builder.Services.AddTransient<PlayerPage>();
 		builder.Services.AddTransient<HistoryPage>();
+		builder.Services.AddTransient<PlaylistDetailPage>();
 
 #if DEBUG
 		builder.Logging.AddDebug();

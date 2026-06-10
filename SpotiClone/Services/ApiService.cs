@@ -72,4 +72,13 @@ public class ApiService : IApiService
         response.EnsureSuccessStatusCode();
         return await response.Content.ReadFromJsonAsync<SearchResultDto>() ?? new();
     }
+
+    public async Task<string?> GetLyricsAsync(string trackId)
+    {
+        var response = await _httpClient.GetAsync($"/tracks/{trackId}/lyrics");
+        if (response.StatusCode == System.Net.HttpStatusCode.NotFound)
+            return null;
+        response.EnsureSuccessStatusCode();
+        return await response.Content.ReadAsStringAsync();
+    }
 }

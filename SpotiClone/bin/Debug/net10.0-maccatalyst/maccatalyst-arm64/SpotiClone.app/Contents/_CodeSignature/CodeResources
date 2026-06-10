@@ -12,9 +12,13 @@
 		<data>
 		8x0ZHZ0zQbpbh0gklwuAwHFL898=
 		</data>
+		<key>Resources/MaterialIcons-Regular.ttf</key>
+		<data>
+		fgLD8AVTL/TSQUhWfIQIl1anhIo=
+		</data>
 		<key>Resources/MauiInfo.plist</key>
 		<data>
-		iEtuUGCV6JM3gxS/pO33swhmpp8=
+		1rz5hdu/Y8o3gy77gkz3DfBugM0=
 		</data>
 		<key>Resources/MonoTouchDebugConfiguration.txt</key>
 		<data>
@@ -265,14 +269,14 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			TNu+ebhvI/wCQfdSubouxGj6xyaym9M7E36iGi8Of8E=
+			Noy6WkZhSaC8pkVrYKxeYRYgpf2fq6jQ5NJYHoX1oOs=
 			</data>
 		</dict>
 		<key>MonoBundle/SpotiClone.pdb</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			qzVQca9+sOBUQAShsX0huQnBAoTSkM+2MDhMflZg9Z4=
+			6JxeBq7Jpo1akCTBEIPNkz7rY3/uCv98Lxb7vjppD4M=
 			</data>
 		</dict>
 		<key>MonoBundle/System.AppContext.dll</key>
@@ -1717,11 +1721,18 @@
 			s9O9YNATb7VyzLZHhLgE2zNmzpv/qvDMkuBrxKH4Ftc=
 			</data>
 		</dict>
+		<key>Resources/MaterialIcons-Regular.ttf</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			7xSfCL3S/wmk4shXNHa3sPP7sVtiOVSt5ZiZ5xdb7do=
+			</data>
+		</dict>
 		<key>Resources/MauiInfo.plist</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			tx0KXqEC+DvcCGyogQTEQWHcCWJYYqH24NtPwhpQEjo=
+			zj00f2/ckmHKefsq+flmnlCZk2ll7jDX0ZwQAnd6jP8=
 			</data>
 		</dict>
 		<key>Resources/MonoTouchDebugConfiguration.txt</key>

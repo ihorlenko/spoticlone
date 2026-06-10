@@ -2,6 +2,7 @@ using System.Collections.ObjectModel;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using SpotiClone.Data;
+using SpotiClone.Helpers;
 using SpotiClone.Models;
 using SpotiClone.Services;
 
@@ -167,6 +168,13 @@ public partial class SearchViewModel : BaseViewModel
         {
             ["TrackId"] = track.Id
         });
+    }
+
+    [RelayCommand]
+    private async Task AddToPlaylistAsync(TrackDto track)
+    {
+        if (track is null) return;
+        await PlaylistHelper.AddTrackToPlaylistAsync(track, _dbService);
     }
 
     [RelayCommand]
