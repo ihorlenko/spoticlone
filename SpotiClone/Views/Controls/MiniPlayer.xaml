@@ -3,13 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="SpotiClone.Views.Controls.MiniPlayer">
 
-    <Grid HeightRequest="60"
+    <Grid HeightRequest="65"
           BackgroundColor="{StaticResource BackgroundCard}"
           IsVisible="{Binding HasCurrentTrack}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="57"/>
-            <RowDefinition Height="3"/>
+            <RowDefinition Height="8"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -84,21 +84,23 @@
                 WidthRequest="44"
                 Padding="0"/>
 
-        <!-- Progress bar -->
+        <!-- Progress bar — gestures on Grid (transparent BoxView doesn't receive touches on iOS) -->
         <Grid x:Name="SeekBarContainer"
               Grid.Row="1" Grid.ColumnSpan="4">
-            <BoxView BackgroundColor="{StaticResource TextMuted}" VerticalOptions="Fill"/>
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Tapped="OnSeekBarTapped"/>
+                <PanGestureRecognizer PanUpdated="OnSeekBarPanned"/>
+            </Grid.GestureRecognizers>
+            <BoxView BackgroundColor="{StaticResource TextMuted}"
+                     HeightRequest="3" VerticalOptions="End"
+                     InputTransparent="True"/>
             <BoxView x:Name="SeekBarFill"
                      BackgroundColor="{StaticResource SpotifyGreen}"
                      HorizontalOptions="Start"
-                     VerticalOptions="Fill"
-                     WidthRequest="0"/>
-            <BoxView BackgroundColor="Transparent" VerticalOptions="Fill">
-                <BoxView.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="OnSeekBarTapped"/>
-                    <PanGestureRecognizer PanUpdated="OnSeekBarPanned"/>
-                </BoxView.GestureRecognizers>
-            </BoxView>
+                     VerticalOptions="End"
+                     HeightRequest="3"
+                     WidthRequest="0"
+                     InputTransparent="True"/>
         </Grid>
     </Grid>
 

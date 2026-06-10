@@ -552,7 +552,7 @@
         }
       }
     },
-    "net10.0-ios26.2/iossimulator-arm64": {
+    "net10.0-ios26.2/maccatalyst-arm64": {
       "CommunityToolkit.Mvvm/8.3.2": {
         "type": "package",
         "compile": {
@@ -1744,7 +1744,7 @@
         }
       }
     },
-    "net10.0-maccatalyst26.2/iossimulator-arm64": {
+    "net10.0-maccatalyst26.2/maccatalyst-arm64": {
       "CommunityToolkit.Mvvm/8.3.2": {
         "type": "package",
         "compile": {
@@ -2281,6 +2281,9 @@
         },
         "runtime": {
           "lib/netstandard2.0/_._": {}
+        },
+        "native": {
+          "runtimes/maccatalyst-arm64/native/libe_sqlite3.dylib": {}
         },
         "build": {
           "buildTransitive/net8.0/SQLitePCLRaw.lib.e_sqlite3.targets": {}
@@ -4375,7 +4378,7 @@
       }
     },
     "runtimes": {
-      "iossimulator-arm64": {
+      "maccatalyst-arm64": {
         "#import": []
       }
     }

@@ -11,7 +11,7 @@
 
             <!-- Header -->
             <Grid HeightRequest="80" VerticalOptions="Fill">
-                <Button Text="&#xe5cd;"
+                <Button Text="&#xe313;"
                         FontFamily="MaterialIcons"
                         HorizontalOptions="Start"
                         VerticalOptions="Center"
@@ -19,6 +19,7 @@
                         BackgroundColor="Transparent"
                         TextColor="{StaticResource TextPrimary}"
                         FontSize="24"
+                        Padding="0"
                         WidthRequest="44"
                         HeightRequest="44"/>
                 <Label Text="Зараз грає"
@@ -46,7 +47,7 @@
             <Grid HeightRequest="60">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="48"/>
+                    <ColumnDefinition Width="64"/>
                 </Grid.ColumnDefinitions>
 
                 <VerticalStackLayout Grid.Column="0" Spacing="4" VerticalOptions="Center">
@@ -66,6 +67,7 @@
                         Command="{Binding ToggleLikeCommand}"
                         BackgroundColor="Transparent"
                         FontSize="24"
+                        Padding="0"
                         VerticalOptions="Center"
                         HorizontalOptions="Center">
                     <Button.Triggers>

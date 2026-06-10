@@ -112,9 +112,9 @@
                                 <DataTemplate>
                                     <Border Style="{StaticResource CardBorder}"
                                             Margin="0,0,0,4">
-                                        <Grid ColumnDefinitions="56,*,44,44"
+                                        <Grid ColumnDefinitions="68,*,52,52"
                                               ColumnSpacing="12"
-                                              Padding="4">
+                                              Padding="5">
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer
                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PlayLikedTrackCommand}"
@@ -125,25 +125,26 @@
                                                     StrokeShape="RoundRectangle 6"
                                                     StrokeThickness="0"
                                                     BackgroundColor="{StaticResource BackgroundElevated}"
-                                                    WidthRequest="56"
-                                                    HeightRequest="56">
+                                                    WidthRequest="68"
+                                                    HeightRequest="68">
                                                 <Image Source="{Binding CoverUrl}"
                                                        Aspect="AspectFill"
-                                                       WidthRequest="56"
-                                                       HeightRequest="56"/>
+                                                       WidthRequest="68"
+                                                       HeightRequest="68"/>
                                             </Border>
 
                                             <VerticalStackLayout Grid.Column="1"
-                                                                 Spacing="3"
+                                                                 Spacing="4"
                                                                  VerticalOptions="Center">
                                                 <Label Text="{Binding Title}"
                                                        TextColor="{StaticResource TextPrimary}"
-                                                       FontSize="15"
+                                                       FontSize="18"
                                                        FontAttributes="Bold"
                                                        LineBreakMode="TailTruncation"
                                                        MaxLines="1"/>
                                                 <Label Text="{Binding ArtistName}"
-                                                       Style="{StaticResource CaptionLabel}"
+                                                       FontSize="14"
+                                                       TextColor="{StaticResource TextMuted}"
                                                        LineBreakMode="TailTruncation"
                                                        MaxLines="1"/>
                                             </VerticalStackLayout>
@@ -153,11 +154,11 @@
                                                     FontFamily="MaterialIcons"
                                                     TextColor="{StaticResource TextSecondary}"
                                                     BackgroundColor="Transparent"
-                                                    FontSize="20"
+                                                    FontSize="22"
                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddToPlaylistCommand}"
                                                     CommandParameter="{Binding .}"
-                                                    WidthRequest="44"
-                                                    HeightRequest="44"
+                                                    WidthRequest="52"
+                                                    HeightRequest="52"
                                                     Padding="0"
                                                     VerticalOptions="Center"/>
 
@@ -166,11 +167,11 @@
                                                     FontFamily="MaterialIcons"
                                                     TextColor="{StaticResource SpotifyGreen}"
                                                     BackgroundColor="Transparent"
-                                                    FontSize="20"
+                                                    FontSize="22"
                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.UnlikeTrackCommand}"
                                                     CommandParameter="{Binding .}"
-                                                    WidthRequest="44"
-                                                    HeightRequest="44"
+                                                    WidthRequest="52"
+                                                    HeightRequest="52"
                                                     Padding="0"
                                                     VerticalOptions="Center"/>
                                         </Grid>
@@ -215,9 +216,9 @@
                                 <DataTemplate>
                                     <Border Style="{StaticResource CardBorder}"
                                             Margin="0,0,0,4">
-                                        <Grid ColumnDefinitions="44,*,44"
+                                        <Grid ColumnDefinitions="68,*,52"
                                               ColumnSpacing="12"
-                                              Padding="4">
+                                              Padding="5">
                                             <Grid.GestureRecognizers>
                                                 <TapGestureRecognizer
                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.OpenPlaylistCommand}"
@@ -227,22 +228,23 @@
                                             <Label Grid.Column="0"
                                                    Text="&#xe405;"
                                                    FontFamily="MaterialIcons"
-                                                   FontSize="28"
+                                                   FontSize="38"
                                                    TextColor="{StaticResource TextMuted}"
                                                    HorizontalOptions="Center"
                                                    VerticalOptions="Center"/>
 
                                             <VerticalStackLayout Grid.Column="1"
-                                                                 Spacing="3"
+                                                                 Spacing="4"
                                                                  VerticalOptions="Center">
                                                 <Label Text="{Binding Name}"
                                                        TextColor="{StaticResource TextPrimary}"
-                                                       FontSize="15"
+                                                       FontSize="18"
                                                        FontAttributes="Bold"
                                                        LineBreakMode="TailTruncation"
                                                        MaxLines="1"/>
                                                 <Label Text="{Binding CreatedAt, StringFormat='Створено: {0:dd.MM.yyyy}'}"
-                                                       Style="{StaticResource CaptionLabel}"/>
+                                                       FontSize="14"
+                                                       TextColor="{StaticResource TextMuted}"/>
                                             </VerticalStackLayout>
 
                                             <Button Grid.Column="2"
@@ -250,11 +252,11 @@
                                                     FontFamily="MaterialIcons"
                                                     TextColor="{StaticResource DangerColor}"
                                                     BackgroundColor="Transparent"
-                                                    FontSize="20"
+                                                    FontSize="22"
                                                     Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.DeletePlaylistCommand}"
                                                     CommandParameter="{Binding .}"
-                                                    WidthRequest="44"
-                                                    HeightRequest="44"
+                                                    WidthRequest="52"
+                                                    HeightRequest="52"
                                                     Padding="0"
                                                     VerticalOptions="Center"/>
                                         </Grid>

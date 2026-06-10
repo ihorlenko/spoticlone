@@ -87,7 +87,8 @@
                                         </Grid.GestureRecognizers>
 
                                         <Label Grid.Column="0"
-                                               Text="🕐"
+                                               Text="&#xe889;"
+                                               FontFamily="MaterialIcons"
                                                FontSize="16"
                                                TextColor="{StaticResource TextMuted}"
                                                VerticalOptions="Center"/>
@@ -120,8 +121,10 @@
                                      Spacing="8"
                                      HorizontalOptions="Center"
                                      VerticalOptions="Center">
-                    <Label Text="🔍"
+                    <Label Text="&#xe8b6;"
+                           FontFamily="MaterialIcons"
                            FontSize="48"
+                           TextColor="{StaticResource TextMuted}"
                            HorizontalOptions="Center"/>
                     <Label Text="Нічого не знайдено"
                            Style="{StaticResource SubtitleLabel}"
@@ -151,56 +154,55 @@
                                              Margin="0,0,0,16">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Padding="0,8" ColumnSpacing="12">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="52"/>
-                                            <ColumnDefinition Width="*"/>
-                                            <ColumnDefinition Width="Auto"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.GestureRecognizers>
+                                    <Border Style="{StaticResource CardBorder}" Margin="0,0,0,4">
+                                        <Border.GestureRecognizers>
                                             <TapGestureRecognizer
                                                 Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.PlayTrackCommand}"
                                                 CommandParameter="{Binding .}"/>
-                                        </Grid.GestureRecognizers>
+                                        </Border.GestureRecognizers>
+                                        <Grid ColumnDefinitions="56,*,Auto"
+                                              ColumnSpacing="12"
+                                              Padding="4">
 
-                                        <Border Grid.Column="0"
-                                                StrokeShape="RoundRectangle 6"
-                                                StrokeThickness="0"
-                                                BackgroundColor="{StaticResource BackgroundCard}"
-                                                WidthRequest="52"
-                                                HeightRequest="52">
-                                            <Image Source="{Binding CoverUrl}"
-                                                   Aspect="AspectFill"
-                                                   WidthRequest="52"
-                                                   HeightRequest="52"/>
-                                        </Border>
+                                            <Border Grid.Column="0"
+                                                    StrokeShape="RoundRectangle 6"
+                                                    StrokeThickness="0"
+                                                    BackgroundColor="{StaticResource BackgroundElevated}"
+                                                    WidthRequest="56"
+                                                    HeightRequest="56">
+                                                <Image Source="{Binding CoverUrl}"
+                                                       Aspect="AspectFill"
+                                                       WidthRequest="56"
+                                                       HeightRequest="56"/>
+                                            </Border>
 
-                                        <VerticalStackLayout Grid.Column="1"
-                                                             Spacing="3"
-                                                             VerticalOptions="Center">
-                                            <Label Text="{Binding Title}"
-                                                   TextColor="{StaticResource TextPrimary}"
-                                                   FontSize="15"
-                                                   FontAttributes="Bold"
-                                                   LineBreakMode="TailTruncation"
-                                                   MaxLines="1"/>
-                                            <Label Text="{Binding ArtistName}"
-                                                   Style="{StaticResource CaptionLabel}"
-                                                   LineBreakMode="TailTruncation"
-                                                   MaxLines="1"/>
-                                        </VerticalStackLayout>
+                                            <VerticalStackLayout Grid.Column="1"
+                                                                 Spacing="3"
+                                                                 VerticalOptions="Center">
+                                                <Label Text="{Binding Title}"
+                                                       TextColor="{StaticResource TextPrimary}"
+                                                       FontSize="15"
+                                                       FontAttributes="Bold"
+                                                       LineBreakMode="TailTruncation"
+                                                       MaxLines="1"/>
+                                                <Label Text="{Binding ArtistName}"
+                                                       Style="{StaticResource CaptionLabel}"
+                                                       LineBreakMode="TailTruncation"
+                                                       MaxLines="1"/>
+                                            </VerticalStackLayout>
 
-                                        <Button Grid.Column="2"
-                                                Text="&#xe03b;"
-                                                FontFamily="MaterialIcons"
-                                                FontSize="20"
-                                                BackgroundColor="Transparent"
-                                                TextColor="{StaticResource TextSecondary}"
-                                                Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddToPlaylistCommand}"
-                                                CommandParameter="{Binding .}"
-                                                WidthRequest="40" HeightRequest="40"
-                                                Padding="0" VerticalOptions="Center"/>
-                                    </Grid>
+                                            <Button Grid.Column="2"
+                                                    Text="&#xe03b;"
+                                                    FontFamily="MaterialIcons"
+                                                    FontSize="20"
+                                                    BackgroundColor="Transparent"
+                                                    TextColor="{StaticResource TextSecondary}"
+                                                    Command="{Binding Source={RelativeSource AncestorType={x:Type ContentPage}}, Path=BindingContext.AddToPlaylistCommand}"
+                                                    CommandParameter="{Binding .}"
+                                                    WidthRequest="40" HeightRequest="40"
+                                                    Padding="0" VerticalOptions="Center"/>
+                                        </Grid>
+                                    </Border>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
@@ -219,37 +221,37 @@
                                              Margin="0,0,0,16">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Padding="0,8" ColumnSpacing="12">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="52"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
+                                    <Border Style="{StaticResource CardBorder}" Margin="0,0,0,4">
+                                        <Grid ColumnDefinitions="56,*"
+                                              ColumnSpacing="12"
+                                              Padding="4">
 
-                                        <Border Grid.Column="0"
-                                                StrokeShape="Ellipse"
-                                                StrokeThickness="0"
-                                                BackgroundColor="{StaticResource BackgroundCard}"
-                                                WidthRequest="52"
-                                                HeightRequest="52">
-                                            <Image Source="{Binding CoverUrl}"
-                                                   Aspect="AspectFill"
-                                                   WidthRequest="52"
-                                                   HeightRequest="52"/>
-                                        </Border>
+                                            <Border Grid.Column="0"
+                                                    StrokeShape="Ellipse"
+                                                    StrokeThickness="0"
+                                                    BackgroundColor="{StaticResource BackgroundElevated}"
+                                                    WidthRequest="56"
+                                                    HeightRequest="56">
+                                                <Image Source="{Binding CoverUrl}"
+                                                       Aspect="AspectFill"
+                                                       WidthRequest="56"
+                                                       HeightRequest="56"/>
+                                            </Border>
 
-                                        <VerticalStackLayout Grid.Column="1"
-                                                             Spacing="3"
-                                                             VerticalOptions="Center">
-                                            <Label Text="{Binding Name}"
-                                                   TextColor="{StaticResource TextPrimary}"
-                                                   FontSize="15"
-                                                   FontAttributes="Bold"
-                                                   LineBreakMode="TailTruncation"
-                                                   MaxLines="1"/>
-                                            <Label Text="Артист"
-                                                   Style="{StaticResource CaptionLabel}"/>
-                                        </VerticalStackLayout>
-                                    </Grid>
+                                            <VerticalStackLayout Grid.Column="1"
+                                                                 Spacing="3"
+                                                                 VerticalOptions="Center">
+                                                <Label Text="{Binding Name}"
+                                                       TextColor="{StaticResource TextPrimary}"
+                                                       FontSize="15"
+                                                       FontAttributes="Bold"
+                                                       LineBreakMode="TailTruncation"
+                                                       MaxLines="1"/>
+                                                <Label Text="Артист"
+                                                       Style="{StaticResource CaptionLabel}"/>
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </Border>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>
@@ -267,43 +269,43 @@
                                              Spacing="0">
                             <BindableLayout.ItemTemplate>
                                 <DataTemplate>
-                                    <Grid Padding="0,8" ColumnSpacing="12">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="52"/>
-                                            <ColumnDefinition Width="*"/>
-                                        </Grid.ColumnDefinitions>
+                                    <Border Style="{StaticResource CardBorder}" Margin="0,0,0,4">
+                                        <Grid ColumnDefinitions="56,*"
+                                              ColumnSpacing="12"
+                                              Padding="4">
 
-                                        <Border Grid.Column="0"
-                                                StrokeShape="RoundRectangle 6"
-                                                StrokeThickness="0"
-                                                BackgroundColor="{StaticResource BackgroundCard}"
-                                                WidthRequest="52"
-                                                HeightRequest="52">
-                                            <Image Source="{Binding CoverUrl}"
-                                                   Aspect="AspectFill"
-                                                   WidthRequest="52"
-                                                   HeightRequest="52"/>
-                                        </Border>
+                                            <Border Grid.Column="0"
+                                                    StrokeShape="RoundRectangle 6"
+                                                    StrokeThickness="0"
+                                                    BackgroundColor="{StaticResource BackgroundElevated}"
+                                                    WidthRequest="56"
+                                                    HeightRequest="56">
+                                                <Image Source="{Binding CoverUrl}"
+                                                       Aspect="AspectFill"
+                                                       WidthRequest="56"
+                                                       HeightRequest="56"/>
+                                            </Border>
 
-                                        <VerticalStackLayout Grid.Column="1"
-                                                             Spacing="3"
-                                                             VerticalOptions="Center">
-                                            <Label Text="{Binding Title}"
-                                                   TextColor="{StaticResource TextPrimary}"
-                                                   FontSize="15"
-                                                   FontAttributes="Bold"
-                                                   LineBreakMode="TailTruncation"
-                                                   MaxLines="1"/>
-                                            <Label Style="{StaticResource CaptionLabel}">
-                                                <Label.Text>
-                                                    <MultiBinding StringFormat="{}{0} • {1}">
-                                                        <Binding Path="ArtistName"/>
-                                                        <Binding Path="Year"/>
-                                                    </MultiBinding>
-                                                </Label.Text>
-                                            </Label>
-                                        </VerticalStackLayout>
-                                    </Grid>
+                                            <VerticalStackLayout Grid.Column="1"
+                                                                 Spacing="3"
+                                                                 VerticalOptions="Center">
+                                                <Label Text="{Binding Title}"
+                                                       TextColor="{StaticResource TextPrimary}"
+                                                       FontSize="15"
+                                                       FontAttributes="Bold"
+                                                       LineBreakMode="TailTruncation"
+                                                       MaxLines="1"/>
+                                                <Label Style="{StaticResource CaptionLabel}">
+                                                    <Label.Text>
+                                                        <MultiBinding StringFormat="{}{0} • {1}">
+                                                            <Binding Path="ArtistName"/>
+                                                            <Binding Path="Year"/>
+                                                        </MultiBinding>
+                                                    </Label.Text>
+                                                </Label>
+                                            </VerticalStackLayout>
+                                        </Grid>
+                                    </Border>
                                 </DataTemplate>
                             </BindableLayout.ItemTemplate>
                         </VerticalStackLayout>

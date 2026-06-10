@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SpotiClone")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+52fa2c847aa31d3b3f01043807c7b01f3612b457")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+0d0b433257ca43ac1488e304c9d8165f95943e48")]
 [assembly: System.Reflection.AssemblyProductAttribute("SpotiClone")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SpotiClone")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
